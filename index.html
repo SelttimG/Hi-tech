@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hi-Tech | Tecnologia & Soluções</title>
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Bebas+Neue&display=swap" rel="stylesheet" />
+  <!-- jQuery + ScrollReveal -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/scrollreveal"></script>
+
+  <style>
+    /* =============================================
+       VARIÁVEIS — edite aqui para trocar cores
+       ============================================= */
+    :root {
+      --primary-bg:   #fff9ea;   /* fundo geral */
+      --secondary-bg: #ffe8b4;   /* fundo secundário / footer */
+      --accent:       #e9a209;   /* laranja/dourado (destaques) */
+      --accent-light: #ffcb45;   /* laranja claro (botões) */
+      --accent-hover: #f8d477;   /* hover dos botões */
+      --dark:         #1d1d1d;   /* texto escuro */
+      --white:        #ffffff;
+      --muted:        #434343;
+      --shadow:       0 0 12px 4px rgba(0,0,0,.10);
+      --radius:       12px;
+    }
+
+    /* =============================================
+       RESET & BASE
+       ============================================= */
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    html   { scroll-behavior:smooth; }
+    body   { font-family:'Poppins',sans-serif; background:var(--primary-bg); color:var(--dark); }
+    section{ padding:28px 8%; }
+    a      { text-decoration:none; color:inherit; }
+    ul     { list-style:none; }
+    img    { display:block; max-width:100%; }
+
+    /* =============================================
+       BOTÃO PADRÃO
+       ============================================= */
+    .btn-default {
+      border:none; cursor:pointer; font-family:'Poppins',sans-serif; font-weight:600;
+      background:var(--accent-light); border-radius:var(--radius);
+      padding:10px 18px; box-shadow:var(--shadow);
+      transition:background .3s ease; display:inline-flex; align-items:center; justify-content:center; gap:6px;
+    }
+    .btn-default:hover { background:var(--accent-hover); }
+
+    /* =============================================
+       TÍTULOS DE SEÇÃO
+       ============================================= */
+    .section-title    { color:var(--accent); font-size:1.563rem; }
+    .section-subtitle { font-size:2.1875rem; font-weight:700; }
+
+    /* =============================================
+       HEADER / NAVBAR
+       ============================================= */
+    header {
+      width:100%; padding:20px 8%; position:sticky; top:0;
+      background:var(--primary-bg); z-index:100; transition:box-shadow .3s;
+    }
+    #navbar {
+      display:flex; align-items:center; justify-content:space-between; gap:16px;
+    }
+
+    /* ── Logo ── */
+    #nav_logo {
+      font-family:'Bebas Neue',sans-serif; font-size:1.6rem; letter-spacing:3px;
+      color:var(--dark); display:flex; align-items:center; gap:6px;
+      text-decoration:none; flex-shrink:0;
+    }
+    #nav_logo .logo-dash { width:3px; height:20px; background:var(--accent); border-radius:2px; display:inline-block; }
+    #nav_logo em { color:var(--accent); font-style:normal; }
+
+    /* ── Links centrais ── */
+    #nav_list {
+      display:flex; gap:36px; align-items:center;
+      /* centraliza em relação ao flex container */
+      flex:1; justify-content:center;
+    }
+    .nav-item a {
+      color:rgba(29,29,29,.65); font-weight:600; font-size:.92rem;
+      transition:color .2s; padding-bottom:4px;
+    }
+    .nav-item.active a,
+    .nav-item a:hover { color:var(--dark); border-bottom:3px solid var(--accent); }
+
+    /* ── Botão Contato ── */
+    #navbar .btn-contact {
+      flex-shrink:0; background:var(--accent); color:var(--white);
+      border-radius:var(--radius); padding:10px 20px; font-weight:700; font-size:.9rem;
+      border:none; cursor:pointer; transition:background .3s; white-space:nowrap;
+    }
+    #navbar .btn-contact:hover { background:var(--accent-light); color:var(--dark); }
+
+    /* ── Mobile ── */
+    #mobile_btn {
+      display:none; border:none; background:transparent;
+      font-size:1.5rem; cursor:pointer; color:var(--dark);
+    }
+    #mobile_menu { display:none; flex-direction:column; align-items:center; gap:12px; padding:12px 0; }
+    #mobile_menu.active { display:flex; }
+    #mobile_nav_list { display:flex; flex-direction:column; gap:10px; text-align:center; }
+    #mobile_nav_list .nav-item a { font-size:1rem; }
+
+    @media(max-width:1000px){
+      #nav_list, #navbar .btn-contact { display:none; }
+      #mobile_btn { display:block; }
+    }
+
+    /* =============================================
+       HERO (#home)
+       ============================================= */
+    #home {
+      display:flex; min-height:calc(100vh - 72px);
+      position:relative; align-items:center; overflow:hidden;
+    }
+
+    /* Forma arredondada à direita */
+    #home .shape {
+      background:var(--secondary-bg); width:52%; height:100%;
+      position:absolute; border-radius:40% 30% 0 20%; top:0; right:0; z-index:1;
+    }
+
+    /* Texto esquerdo */
+    #cta {
+      width:42%; display:flex; flex-direction:column; gap:22px;
+      position:relative; z-index:3;
+    }
+    #cta .tag {
+      display:inline-flex; align-items:center; gap:8px;
+      font-size:.75rem; font-weight:700; letter-spacing:2px;
+      text-transform:uppercase; color:var(--accent);
+    }
+    #cta .tag::before {
+      content:''; width:8px; height:8px; border-radius:50%;
+      background:var(--accent); animation:blink 1.8s infinite;
+    }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.3} }
+
+    #cta h1 {
+      font-size:clamp(2.2rem,4.5vw,3.6rem); line-height:1.05; font-weight:900; color:var(--dark);
+    }
+    #cta h1 span { color:var(--accent); }
+
+    #cta .description {
+      font-size:1rem; color:var(--muted); line-height:1.8; max-width:460px;
+    }
+    #cta .description strong { color:var(--dark); }
+
+    /* Público-alvo chips */
+    #audience {
+      display:flex; flex-wrap:wrap; gap:8px; margin-top:4px;
+    }
+    .audience-chip {
+      background:var(--white); border:1px solid var(--accent-light);
+      border-radius:20px; padding:5px 14px; font-size:.78rem; font-weight:600;
+      color:var(--muted); box-shadow:0 2px 6px rgba(0,0,0,.07);
+    }
+
+    /* Banner direito — word cloud */
+    #banner {
+      position:absolute; right:0; top:0; width:52%; height:100%;
+      z-index:2; display:flex; align-items:center; justify-content:center; overflow:hidden;
+    }
+    .word-cloud {
+      position:relative; width:480px; height:480px;
+    }
+    /* centro */
+    .wc-center {
+      position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+      width:110px; height:110px; background:var(--accent);
+      border-radius:50%; display:flex; align-items:center; justify-content:center;
+      font-family:'Bebas Neue',sans-serif; font-size:1.3rem; letter-spacing:2px;
+      color:var(--white); text-align:center; line-height:1.2;
+      box-shadow:0 0 30px rgba(233,162,9,.4); z-index:5;
+    }
+    /* balão genérico */
+    .wc-tag {
+      position:absolute; background:var(--white);
+      border-radius:18px 18px 18px 4px;
+      padding:7px 14px; font-size:.72rem; font-weight:600;
+      color:var(--dark); box-shadow:var(--shadow);
+      white-space:nowrap; z-index:4;
+      transition:transform .3s, box-shadow .3s;
+      animation:float 4s ease-in-out infinite;
+    }
+    .wc-tag:hover { transform:scale(1.08) !important; box-shadow:0 6px 18px rgba(0,0,0,.15); }
+    .wc-tag.hi    { background:var(--accent); color:var(--white); border-radius:18px 18px 4px 18px; }
+    .wc-tag i     { margin-right:5px; color:var(--accent); }
+    .wc-tag.hi i  { color:var(--white); }
+
+    @keyframes float {
+      0%,100% { transform:translateY(0); }
+      50%      { transform:translateY(-7px); }
+    }
+
+    /* posições dos balões — ajuste à vontade */
+    .wc-tag:nth-child(2)  { top:2%;   left:28%; animation-delay:0s }
+    .wc-tag:nth-child(3)  { top:10%;  left:5%;  animation-delay:.5s }
+    .wc-tag:nth-child(4)  { top:9%;   right:4%; animation-delay:.3s }
+    .wc-tag:nth-child(5)  { top:27%;  left:0%;  animation-delay:.8s }
+    .wc-tag:nth-child(6)  { top:27%;  right:1%; animation-delay:.2s }
+    .wc-tag:nth-child(7)  { top:44%;  left:1%;  animation-delay:1s  }
+    .wc-tag:nth-child(8)  { top:44%;  right:0%; animation-delay:.6s }
+    .wc-tag:nth-child(9)  { bottom:22%;left:3%; animation-delay:.4s }
+    .wc-tag:nth-child(10) { bottom:22%;right:2%;animation-delay:.9s }
+    .wc-tag:nth-child(11) { bottom:10%;left:20%;animation-delay:.1s }
+    .wc-tag:nth-child(12) { bottom:10%;right:15%;animation-delay:.7s}
+    .wc-tag:nth-child(13) { bottom:1%; left:35%; animation-delay:.5s}
+    .wc-tag:nth-child(14) { top:18%;  left:20%; animation-delay:.3s; font-size:.65rem }
+    .wc-tag:nth-child(15) { top:18%;  right:18%;animation-delay:.6s; font-size:.65rem }
+    .wc-tag:nth-child(16) { bottom:33%;left:14%;animation-delay:.8s; font-size:.65rem }
+    .wc-tag:nth-child(17) { bottom:33%;right:12%;animation-delay:.2s;font-size:.65rem }
+
+    @media(max-width:900px){
+      #home { flex-direction:column; min-height:auto; padding-top:20px; }
+      #home .shape, #banner { display:none; }
+      #cta { width:100%; text-align:center; align-items:center; }
+    }
+
+    /* =============================================
+       PRODUTOS (#products)
+       ============================================= */
+    #products {
+      display:flex; flex-direction:column; align-items:center;
+      min-height:80vh; background:var(--primary-bg);
+    }
+    #products .section-title { margin-bottom:4px; }
+    #products .section-subtitle { margin-bottom:8px; }
+    .products-note { font-size:.88rem; color:var(--muted); margin-bottom:32px; }
+
+    #product-grid {
+      width:100%; display:flex; justify-content:center;
+      flex-wrap:wrap; gap:24px; margin-top:8px;
+    }
+
+    .product-card {
+      background:var(--white); border-radius:20px;
+      padding:24px 20px; width:calc(25% - 18px); min-width:220px;
+      box-shadow:var(--shadow); position:relative; overflow:hidden;
+      display:flex; flex-direction:column; align-items:center; gap:14px;
+      transition:transform .3s, box-shadow .3s;
+    }
+    .product-card:hover { transform:translateY(-6px); box-shadow:0 12px 28px rgba(0,0,0,.13); }
+
+    /* badge tipo */
+    .product-card .prod-badge {
+      position:absolute; top:-8px; right:-8px;
+      background:var(--accent); color:var(--white);
+      width:64px; height:64px; border-radius:0 18px 0 40px;
+      display:flex; align-items:center; justify-content:center;
+      font-size:1.4rem;
+    }
+
+    /* ícone / imagem do produto — 120×120 círculo */
+    .prod-img-wrap {
+      width:120px; height:120px; border-radius:50%;
+      background:var(--secondary-bg); display:flex; align-items:center; justify-content:center;
+      overflow:hidden; border:3px solid var(--accent-light);
+    }
+    .prod-img-wrap img  { width:100%; height:100%; object-fit:cover; }
+    .prod-img-wrap span { font-size:3rem; } /* emoji fallback */
+
+    .product-card h3 { font-size:1.05rem; font-weight:700; text-align:center; }
+    .product-card .prod-desc { font-size:.83rem; color:var(--muted); text-align:center; line-height:1.6; }
+
+    .prod-rate { display:flex; gap:3px; align-items:center; }
+    .prod-rate i { color:var(--accent); font-size:.85rem; }
+    .prod-rate span { font-size:.8rem; color:var(--muted); margin-left:4px; }
+
+    .prod-footer {
+      width:100%; display:flex; align-items:center;
+      justify-content:space-between; margin-top:auto;
+    }
+    .prod-footer h4 { font-size:1.1rem; color:var(--accent); font-weight:700; }
+    .prod-footer .btn-default { padding:9px 14px; font-size:.85rem; }
+    .prod-footer .free-badge {
+      background:var(--accent-light); border-radius:8px;
+      padding:4px 10px; font-size:.78rem; font-weight:700; color:var(--dark);
+    }
+
+    @media(max-width:1000px){ .product-card { width:calc(50% - 12px); } }
+    @media(max-width:580px) { .product-card { width:100%; } }
+
+    /* =============================================
+       SOBRE MIM + DEPOIMENTOS (#about)
+       ============================================= */
+    #about {
+      display:flex; align-items:flex-start;
+      justify-content:center; gap:60px;
+      min-height:80vh; flex-wrap:wrap;
+      background:var(--primary-bg);
+    }
+
+    /* ── Foto ── */
+    #about-photo-wrap {
+      flex-shrink:0; display:flex; flex-direction:column;
+      align-items:center; gap:0; position:relative;
+    }
+    #about-photo-bg {
+      width:300px; height:380px;
+      background:var(--accent); border-radius:120px 120px 60px 60px;
+      position:absolute; bottom:0; left:50%; transform:translateX(-50%);
+      z-index:0;
+    }
+    #about-photo {
+      width:290px; height:370px; object-fit:cover; object-position:top center;
+      border-radius:110px 110px 55px 55px;
+      position:relative; z-index:1;
+      /* ↓ substitua chef.png pela sua foto */
+      filter:drop-shadow(0 8px 18px rgba(0,0,0,.18));
+    }
+    /* ── badge flutuante ── */
+    .about-badge {
+      position:absolute; bottom:10px; right:-20px; z-index:2;
+      background:var(--white); border-radius:var(--radius);
+      padding:10px 16px; box-shadow:var(--shadow);
+      font-size:.82rem; font-weight:700; white-space:nowrap;
+    }
+    .about-badge span { color:var(--accent); margin-right:4px; }
+
+    /* ── Conteúdo ── */
+    #about-content {
+      flex:1; min-width:280px; max-width:540px;
+      display:flex; flex-direction:column; gap:20px;
+    }
+    #about-content .section-title    { margin-bottom:0; }
+    #about-content .section-subtitle { font-size:1.9rem; }
+
+    /* balão "sobre mim" */
+    .about-bubble {
+      background:var(--white); border-radius:16px 16px 16px 4px;
+      padding:20px 24px; box-shadow:var(--shadow);
+      font-size:.92rem; color:var(--muted); line-height:1.8;
+      position:relative;
+    }
+    .about-bubble strong { color:var(--dark); }
+
+    /* timeline rápida */
+    .about-timeline { display:flex; flex-direction:column; gap:12px; margin-top:4px; }
+    .tl-item { display:flex; gap:14px; align-items:flex-start; }
+    .tl-year {
+      flex-shrink:0; width:52px; font-family:'Bebas Neue',sans-serif;
+      font-size:1.2rem; color:var(--accent); padding-top:2px;
+    }
+    .tl-text h4 { font-size:.88rem; font-weight:700; }
+    .tl-text p  { font-size:.82rem; color:var(--muted); line-height:1.6; }
+
+    /* ── Depoimentos ── */
+    #feedbacks {
+      display:flex; flex-direction:column; gap:16px; margin-top:24px;
+    }
+    .feedback {
+      display:flex; align-items:center; gap:16px;
+      background:var(--white); padding:14px; border-radius:var(--radius);
+      box-shadow:var(--shadow);
+    }
+    .feedback-avatar {
+      width:80px; height:80px; border-radius:50%; object-fit:cover; flex-shrink:0;
+    }
+    .feedback-content p { display:flex; justify-content:space-between; font-weight:600; font-size:.9rem; }
+    .feedback-content p span { color:var(--accent); }
+    .feedback-content blockquote {
+      font-size:.84rem; color:var(--muted); line-height:1.65; margin-top:4px;
+      border-left:3px solid var(--accent-light); padding-left:10px;
+    }
+
+    /* ── Disqus ── */
+    #disqus-wrap {
+      width:100%; margin-top:32px;
+      background:var(--white); border-radius:20px;
+      padding:24px; box-shadow:var(--shadow);
+    }
+    #disqus-wrap h3 {
+      font-size:1.1rem; font-weight:700; margin-bottom:16px;
+      color:var(--dark); display:flex; align-items:center; gap:8px;
+    }
+    #disqus-wrap h3 i { color:var(--accent); }
+    #disqus_thread { min-height:200px; }
+
+    @media(max-width:900px){
+      #about { flex-direction:column; align-items:center; }
+      #about-content { max-width:100%; }
+      #about-photo-wrap { display:none; }   /* esconde foto em mobile pequeno */
+    }
+
+    /* =============================================
+       CONTATO (#contact)
+       ============================================= */
+    #contact {
+      background:var(--primary-bg);
+      display:flex; flex-direction:column; align-items:center; gap:16px;
+    }
+    #contact .section-subtitle { font-size:1.8rem; }
+
+    #contact-cards {
+      display:flex; flex-wrap:wrap; justify-content:center;
+      gap:16px; margin-top:16px; width:100%;
+    }
+    .contact-card {
+      background:var(--white); border-radius:var(--radius);
+      padding:22px 28px; min-width:160px; text-align:center;
+      box-shadow:var(--shadow); text-decoration:none; color:var(--dark);
+      transition:transform .3s, box-shadow .3s;
+      display:flex; flex-direction:column; align-items:center; gap:10px;
+    }
+    .contact-card:hover { transform:translateY(-5px); box-shadow:0 10px 24px rgba(0,0,0,.13); }
+    .contact-card i { font-size:2rem; color:var(--accent); }
+    .contact-card h4 { font-size:.95rem; font-weight:700; }
+    .contact-card p  { font-size:.78rem; color:var(--muted); }
+
+    /* =============================================
+       FOOTER
+       ============================================= */
+    footer { background:var(--secondary-bg); }
+    footer img { width:100%; }
+    #footer_items {
+      display:flex; justify-content:space-between; align-items:center;
+      padding:0 8% 24px;
+    }
+    #copyright { font-weight:500; }
+    .social-btns { display:flex; gap:14px; }
+    .social-btns a {
+      width:42px; height:42px; background:var(--white);
+      border-radius:10px; display:flex; align-items:center; justify-content:center;
+      font-size:1.2rem; color:var(--dark); box-shadow:var(--shadow);
+      transition:box-shadow .3s;
+    }
+    .social-btns a:hover { box-shadow:0 0 14px 6px rgba(0,0,0,.12); }
+
+    @media(max-width:600px){
+      #footer_items { flex-direction:column; gap:16px; }
+    }
+
+    /* =============================================
+       UTILITÁRIOS
+       ============================================= */
+    .sr-only { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0,0,0,0); }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════
+     HEADER
+═══════════════════════════ -->
+<header>
+  <nav id="navbar">
+
+    <!-- ── LOGO ─────────────────────────────────
+         Para mudar: altere o texto abaixo        -->
+    <a id="nav_logo" href="#home">
+      HI<span class="logo-dash"></span><em>TECH</em>
+    </a>
+
+    <!-- ── MENU CENTRAL ─────────────────────────
+         Para adicionar/remover links edite aqui  -->
+    <ul id="nav_list">
+      <li class="nav-item active"><a href="#home">Início</a></li>
+      <li class="nav-item"><a href="#products">Softwares</a></li>
+      <li class="nav-item"><a href="#products">Tutoriais</a></li>
+      <li class="nav-item"><a href="#products">eBooks</a></li>
+      <li class="nav-item"><a href="#about">Portfólio</a></li>
+      <li class="nav-item"><a href="#contact">Contato</a></li>
+    </ul>
+
+    <!-- ── BOTÃO CONTATO ──────────────────────── -->
+    <button class="btn-contact" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">
+      Fale Comigo
+    </button>
+
+    <!-- ── BOTÃO MOBILE ───────────────────────── -->
+    <button id="mobile_btn" aria-label="Abrir menu">
+      <i class="fa-solid fa-bars"></i>
+    </button>
+  </nav>
+
+  <!-- Menu mobile -->
+  <div id="mobile_menu">
+    <ul id="mobile_nav_list">
+      <li class="nav-item"><a href="#home">Início</a></li>
+      <li class="nav-item"><a href="#products">Produtos</a></li>
+      <li class="nav-item"><a href="#about">Sobre Mim</a></li>
+      <li class="nav-item"><a href="#contact">Contato</a></li>
+    </ul>
+    <button class="btn-contact" style="margin-top:8px"
+      onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">
+      Fale Comigo
+    </button>
+  </div>
+</header>
+
+
+<!-- ═══════════════════════════
+     HERO
+═══════════════════════════ -->
+<section id="home">
+  <div class="shape"></div>
+
+  <!-- ── CTA ESQUERDO ────────────────────────────────────────────
+       Para editar: altere os textos entre as tags abaixo          -->
+  <div id="cta">
+
+    <div class="tag">Especialista em TI · +10 Anos de Experiência</div>
+
+    <h1>
+      Domine a<br>
+      <span>Tecnologia</span><br>
+      com Confiança
+    </h1>
+
+    <!-- Subtítulo / descrição -->
+    <p class="description">
+      <strong>eBooks, softwares, tutoriais</strong> e consultoria especializada em
+      Windows, Linux, Active Directory e infraestrutura de TI.<br><br>
+      Conteúdo criado para <strong>técnicos de suporte, analistas de sistemas,
+      administradores de redes</strong> e todos que têm interesse em
+      <strong>tecnologia e inovação</strong>.
+    </p>
+
+    <!-- Público-alvo chips — adicione ou remova chips aqui -->
+    <div id="audience">
+      <span class="audience-chip"><i class="fa-solid fa-user-gear"></i> Técnicos de TI</span>
+      <span class="audience-chip"><i class="fa-solid fa-network-wired"></i> Analistas de Redes</span>
+      <span class="audience-chip"><i class="fa-solid fa-server"></i> Sysadmins</span>
+      <span class="audience-chip"><i class="fa-solid fa-graduation-cap"></i> Estudantes</span>
+      <span class="audience-chip"><i class="fa-solid fa-lightbulb"></i> Entusiastas</span>
+    </div>
+
+  </div><!-- /#cta -->
+
+  <!-- ── NUVEM DE PALAVRAS DIREITA ────────────────────────────────
+       Para adicionar termos: copie um .wc-tag e edite o texto      -->
+  <div id="banner">
+    <div class="word-cloud">
+      <!-- Centro -->
+      <div class="wc-center">HI<br>TECH</div>
+
+      <!-- Balões — edite os textos à vontade -->
+      <div class="wc-tag hi"><i class="fa-brands fa-windows"></i>Windows Server</div>
+      <div class="wc-tag"><i class="fa-brands fa-linux"></i>Linux Ubuntu</div>
+      <div class="wc-tag"><i class="fa-solid fa-id-card"></i>Active Directory</div>
+      <div class="wc-tag"><i class="fa-solid fa-network-wired"></i>Networking</div>
+      <div class="wc-tag"><i class="fa-solid fa-shield-halved"></i>pfSense</div>
+      <div class="wc-tag"><i class="fa-solid fa-globe"></i>DNS · DHCP</div>
+      <div class="wc-tag"><i class="fa-solid fa-lock"></i>VPN · VLAN</div>
+      <div class="wc-tag"><i class="fa-solid fa-server"></i>Servidor Web</div>
+      <div class="wc-tag"><i class="fa-solid fa-gears"></i>IIS · Apache</div>
+      <div class="wc-tag"><i class="fa-solid fa-code"></i>PHP · HTML · CSS</div>
+      <div class="wc-tag"><i class="fa-brands fa-docker"></i>Docker</div>
+      <div class="wc-tag"><i class="fa-solid fa-building"></i>Infraestrutura</div>
+      <div class="wc-tag hi"><i class="fa-solid fa-people-group"></i>Gestão de TI</div>
+      <div class="wc-tag"><i class="fa-solid fa-video"></i>Tutoriais</div>
+      <div class="wc-tag"><i class="fa-solid fa-screwdriver-wrench"></i>Suporte Técnico</div>
+      <div class="wc-tag"><i class="fa-solid fa-computer"></i>Formatação</div>
+      <div class="wc-tag"><i class="fa-solid fa-diagram-project"></i>GPO</div>
+    </div>
+  </div>
+
+</section><!-- /#home -->
+
+
+<!-- ═══════════════════════════
+     PRODUTOS
+═══════════════════════════ -->
+<section id="products">
+  <!-- ── Títulos ─────────────────────────────────
+       Edite as strings abaixo para mudar os textos -->
+  <h2 class="section-title">Produtos</h2>
+  <h3 class="section-subtitle">Nossos itens mais escolhidos</h3>
+  <p class="products-note">Clique em qualquer produto para saber mais ou adquirir.</p>
+
+  <div id="product-grid">
+
+    <!-- ══════════════════════════════════════════
+         CARD DE PRODUTO — copie este bloco para
+         adicionar mais produtos
+         ══════════════════════════════════════════
+      Campos para editar:
+        • prod-badge emoji/ícone (tipo do produto)
+        • prod-img-wrap → coloque <img src="sua-imagem.png"> ou deixe o emoji
+        • h3 → nome do produto
+        • prod-desc → descrição curta
+        • prod-rate → estrelas + avaliações
+        • prod-footer h4 → preço  (ou use <span class="free-badge">GRÁTIS</span>)
+        • href do botão → link Hotmart / Kirvano / etc.
+    -->
+
+    <!-- Card 1 — eBook -->
+    <div class="product-card">
+      <div class="prod-badge">📘</div>
+      <div class="prod-img-wrap">
+        <!--
+          Para usar imagem real:
+          <img src="imagens/ebook-winserver.png" alt="eBook Windows Server">
+        -->
+        <span>📘</span>
+      </div>
+      <h3>Windows Server do Zero</h3>
+      <p class="prod-desc">
+        Guia completo de instalação, configuração e gerenciamento do
+        Windows Server 2022. AD, GPO, DNS e DHCP.
+      </p>
+      <div class="prod-rate">
+        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+        <i class="fa-solid fa-star"></i>
+        <span>(200+)</span>
+      </div>
+      <div class="prod-footer">
+        <h4>R$ 49,90</h4>
+        <!-- Troque o href pelo link real (Hotmart, Kirvano…) -->
+        <a href="#" class="btn-default"><i class="fa-solid fa-cart-shopping"></i></a>
+      </div>
+    </div>
+
+    <!-- Card 2 — Tutorial -->
+    <div class="product-card">
+      <div class="prod-badge">🎬</div>
+      <div class="prod-img-wrap"><span>🎬</span></div>
+      <h3>Active Directory Completo</h3>
+      <p class="prod-desc">
+        Série de vídeos: GPO, usuários, grupos, DNS e DHCP em
+        ambiente AD real. Do zero à produção.
+      </p>
+      <div class="prod-rate">
+        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+        <i class="fa-solid fa-star"></i>
+        <span>(350+)</span>
+      </div>
+      <div class="prod-footer">
+        <h4>R$ 39,90</h4>
+        <a href="#" class="btn-default"><i class="fa-solid fa-cart-shopping"></i></a>
+      </div>
+    </div>
+
+    <!-- Card 3 — Software -->
+    <div class="product-card">
+      <div class="prod-badge">💾</div>
+      <div class="prod-img-wrap"><span>💾</span></div>
+      <h3>Pack Ferramentas TI</h3>
+      <p class="prod-desc">
+        Coleção curada de utilitários para técnicos: diagnóstico,
+        limpeza, reparo e monitoramento de sistema.
+      </p>
+      <div class="prod-rate">
+        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+        <i class="fa-solid fa-star"></i>
+        <span>(480+)</span>
+      </div>
+      <div class="prod-footer">
+        <h4>R$ 29,90</h4>
+        <a href="#" class="btn-default"><i class="fa-solid fa-cart-shopping"></i></a>
+      </div>
+    </div>
+
+    <!-- Card 4 — Grátis -->
+    <div class="product-card">
+      <div class="prod-badge">🖥️</div>
+      <div class="prod-img-wrap"><span>🖥️</span></div>
+      <h3>Formatação Profissional</h3>
+      <p class="prod-desc">
+        Tutorial completo: formatação, drivers, ativação e
+        pós-instalação do Windows 10/11. Passo a passo.
+      </p>
+      <div class="prod-rate">
+        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+        <i class="fa-solid fa-star"></i>
+        <span>(700+)</span>
+      </div>
+      <div class="prod-footer">
+        <span class="free-badge">GRÁTIS</span>
+        <a href="#" class="btn-default"><i class="fa-brands fa-youtube"></i></a>
+      </div>
+    </div>
+
+  </div><!-- /#product-grid -->
+</section>
+
+
+<!-- ═══════════════════════════
+     SOBRE MIM + DEPOIMENTOS
+═══════════════════════════ -->
+<section id="about">
+
+  <!-- ── FOTO ────────────────────────────────────
+       Troque chef.png pela sua foto real          -->
+  <div id="about-photo-wrap">
+    <div id="about-photo-bg"></div>
+    <img id="about-photo"
+         src="chef.png"
+         alt="Foto do especialista"
+         title="Substitua chef.png pela sua foto" />
+    <div class="about-badge">
+      <span>⚙️</span> Especialista em TI
+    </div>
+  </div>
+
+  <!-- ── CONTEÚDO ────────────────────────────────
+       Edite os textos abaixo à vontade            -->
+  <div id="about-content">
+
+    <h2 class="section-title">Sobre Mim</h2>
+    <h3 class="section-subtitle">Quem está por trás da Hi-Tech?</h3>
+
+    <!-- Balão de apresentação -->
+    <div class="about-bubble">
+      <!--
+        ↓ EDITE ESTE TEXTO COM SUA BIO REAL ↓
+      -->
+      Olá! Sou um profissional apaixonado por tecnologia com
+      <strong>mais de 10 anos de experiência</strong> em infraestrutura de TI.
+      Ao longo da minha trajetória atuei como técnico de suporte, analista de redes
+      e administrador de sistemas em empresas dos mais variados segmentos.<br><br>
+      Hoje dedico parte do meu tempo a <strong>criar conteúdo de qualidade</strong> —
+      tutoriais, eBooks e packs de ferramentas — para democratizar o conhecimento em TI
+      no Brasil e no mundo. Acredito que tecnologia bem aplicada transforma vidas e negócios.
+    </div>
+
+    <!-- Timeline rápida -->
+    <div class="about-timeline">
+      <!-- Edite ano e descrição de cada etapa -->
+      <div class="tl-item">
+        <div class="tl-year">2013</div>
+        <div class="tl-text">
+          <h4>Início na área de TI</h4>
+          <p>Suporte técnico, montagem e manutenção de computadores.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">2016</div>
+        <div class="tl-text">
+          <h4>Infraestrutura corporativa</h4>
+          <p>Windows Server, Active Directory, redes e implantação em empresas.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">2019</div>
+        <div class="tl-text">
+          <h4>Linux & Segurança</h4>
+          <p>pfSense, VPN, VLAN e segurança em redes corporativas.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">2022</div>
+        <div class="tl-text">
+          <h4>Criação de conteúdo</h4>
+          <p>Tutoriais, eBooks e cursos voltados a técnicos e entusiastas de TI.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Depoimentos fixos (visuais) ───────────────
+         Adicione/remova .feedback conforme necessário  -->
+    <div id="feedbacks">
+
+      <div class="feedback">
+        <!-- Troque avatar.png por uma foto real (ou deixe como placeholder) -->
+        <img src="avatar.png" class="feedback-avatar" alt="Avatar">
+        <div class="feedback-content">
+          <p>Rafael F. — Analista de Suporte
+            <span>
+              <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+            </span>
+          </p>
+          <blockquote>
+            "O eBook de Windows Server salvou meu projeto. Conteúdo muito claro e
+            direto ao ponto. Valeu cada centavo!"
+          </blockquote>
+        </div>
+      </div>
+
+      <div class="feedback">
+        <img src="avatar.png" class="feedback-avatar" alt="Avatar">
+        <div class="feedback-content">
+          <p>Carla M. — Sysadmin
+            <span>
+              <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+            </span>
+          </p>
+          <blockquote>
+            "Tutorial de Active Directory é o melhor que já vi. Prático, completo
+            e com exemplos do dia a dia. Implementei na empresa na primeira tentativa."
+          </blockquote>
+        </div>
+      </div>
+
+    </div><!-- /#feedbacks -->
+
+    <!-- ── DISQUS (comentários com login social) ──────
+         PASSO A PASSO PARA ATIVAR:
+         1. Acesse https://disqus.com e crie uma conta gratuita
+         2. Clique em "Get Started" → "I want to install Disqus on my site"
+         3. Escolha um "Shortname" (ex: hi-tech-br)
+         4. Substitua 'SEU-SHORTNAME-AQUI' abaixo pelo shortname escolhido
+         5. Pronto! O Disqus permite login com Google, Facebook, Twitter e e-mail
+         ─────────────────────────────────────────────── -->
+    <div id="disqus-wrap">
+      <h3><i class="fa-solid fa-comments"></i> Deixe seu comentário</h3>
+      <div id="disqus_thread"></div>
+    </div>
+
+  </div><!-- /#about-content -->
+</section><!-- /#about -->
+
+
+<!-- ═══════════════════════════
+     CONTATO
+═══════════════════════════ -->
+<section id="contact">
+  <h2 class="section-title">Contato</h2>
+  <h3 class="section-subtitle">Onde me encontrar</h3>
+  <p style="color:var(--muted);font-size:.9rem">
+    Consultoria, dúvidas, parcerias ou só um oi — estou nos canais abaixo.
+  </p>
+
+  <!-- ── CARDS DE CONTATO ─────────────────────────
+       Para editar: troque href, ícone, h4 e p      -->
+  <div id="contact-cards">
+
+    <a href="https://wa.me/55XXXXXXXXXX" class="contact-card" target="_blank" rel="noopener">
+      <i class="fa-brands fa-whatsapp"></i>
+      <h4>WhatsApp</h4>
+      <p>Consultoria & Suporte</p>
+    </a>
+
+    <a href="https://youtube.com/@seucanal" class="contact-card" target="_blank" rel="noopener">
+      <i class="fa-brands fa-youtube"></i>
+      <h4>YouTube</h4>
+      <p>Tutoriais Gratuitos</p>
+    </a>
+
+    <a href="https://tiktok.com/@seuperfil" class="contact-card" target="_blank" rel="noopener">
+      <i class="fa-brands fa-tiktok"></i>
+      <h4>TikTok</h4>
+      <p>Dicas Rápidas</p>
+    </a>
+
+    <a href="https://instagram.com/seuperfil" class="contact-card" target="_blank" rel="noopener">
+      <i class="fa-brands fa-instagram"></i>
+      <h4>Instagram</h4>
+      <p>Novidades & Dicas</p>
+    </a>
+
+    <a href="https://linkedin.com/in/seuperfil" class="contact-card" target="_blank" rel="noopener">
+      <i class="fa-brands fa-linkedin"></i>
+      <h4>LinkedIn</h4>
+      <p>Portfólio Profissional</p>
+    </a>
+
+    <a href="mailto:contato@hi-tech.com" class="contact-card">
+      <i class="fa-solid fa-envelope"></i>
+      <h4>E-mail</h4>
+      <p>contato@hi-tech.com</p>
+    </a>
+
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════
+     FOOTER
+═══════════════════════════ -->
+<footer>
+  <!-- wave.svg cria a ondinha decorativa no topo do footer -->
+  <img src="wave.svg" alt="">
+  <div id="footer_items">
+    <!-- Edite o nome e o ano -->
+    <span id="copyright">&copy; 2025 Hi-Tech</span>
+    <div class="social-btns">
+      <a href="https://wa.me/55XXXXXXXXXX" target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
+      <a href="https://instagram.com/seuperfil" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+      <a href="https://youtube.com/@seucanal" target="_blank"><i class="fa-brands fa-youtube"></i></a>
+    </div>
+  </div>
+</footer>
+
+
+<!-- ═══════════════════════════
+     SCRIPTS
+═══════════════════════════ -->
+<script>
+/* ─────────────────────────────────────────────
+   DISQUS — substitua 'SEU-SHORTNAME-AQUI'
+   pelo shortname que você criou em disqus.com
+   ───────────────────────────────────────────── */
+var disqus_config = function () {
+  this.page.url = window.location.href;
+  this.page.identifier = 'hitech-home';
+};
+(function() {
+  var d = document, s = d.createElement('script');
+  // ↓ TROQUE AQUI pelo seu shortname do Disqus
+  s.src = 'https://SEU-SHORTNAME-AQUI.disqus.com/embed.js';
+  s.setAttribute('data-timestamp', +new Date());
+  (d.head || d.body).appendChild(s);
+})();
+</script>
+
+<script>
+$(document).ready(function () {
+
+  /* ── Menu mobile ── */
+  $('#mobile_btn').on('click', function () {
+    $('#mobile_menu').toggleClass('active');
+    $(this).find('i').toggleClass('fa-bars fa-x');
+  });
+
+  /* ── Sombra header ao rolar ── */
+  const $header = $('header');
+  $(window).on('scroll', function () {
+    $header.css('box-shadow',
+      $(window).scrollTop() > 10
+        ? '0 2px 12px rgba(0,0,0,.10)'
+        : 'none'
+    );
+  });
+
+  /* ── Destaque nav item ativo ── */
+  const sections  = $('section');
+  const navLinks  = $('#nav_list .nav-item');
+  $(window).on('scroll', function () {
+    const scrollY = $(window).scrollTop() + 80;
+    let active = 0;
+    sections.each(function (i) {
+      if ($(this).offset().top <= scrollY) active = i;
+    });
+    navLinks.removeClass('active');
+    navLinks.eq(active).addClass('active');
+  });
+
+  /* ── ScrollReveal ── */
+  ScrollReveal().reveal('#cta',          { origin:'left',  duration:1200, distance:'24px' });
+  ScrollReveal().reveal('.word-cloud',   { origin:'right', duration:1200, distance:'24px' });
+  ScrollReveal().reveal('.product-card', { origin:'bottom',duration:800,  distance:'20px', interval:120 });
+  ScrollReveal().reveal('#about-photo-wrap', { origin:'left', duration:1000, distance:'24px' });
+  ScrollReveal().reveal('.about-bubble', { origin:'right', duration:900,  distance:'20px' });
+  ScrollReveal().reveal('.tl-item',      { origin:'right', duration:700,  distance:'16px', interval:100 });
+  ScrollReveal().reveal('.feedback',     { origin:'bottom',duration:700,  distance:'16px', interval:120 });
+  ScrollReveal().reveal('.contact-card', { origin:'bottom',duration:700,  distance:'16px', interval:100 });
+});
+</script>
+
+</body>
+</html>
