@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Softwares | Hi-Tech</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous"/>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Bebas+Neue&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="shared.css"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/scrollreveal"></script>
+  <style>
+    /* ── Filtro de categorias ── */
+    .filter-bar { display:flex; flex-wrap:wrap; gap:10px; margin-bottom:32px; }
+    .filter-btn {
+      border:2px solid var(--accent-light); background:transparent;
+      border-radius:20px; padding:7px 20px; font-family:'Poppins',sans-serif;
+      font-size:.82rem; font-weight:600; cursor:pointer; color:var(--muted);
+      transition:.2s;
+    }
+    .filter-btn.active,
+    .filter-btn:hover { background:var(--accent); color:var(--white); border-color:var(--accent); }
+
+    /* ── Chip de sistema operacional ── */
+    .os-chips { display:flex; gap:6px; flex-wrap:wrap; }
+    .os-chip {
+      font-size:.68rem; font-weight:700; padding:3px 10px; border-radius:20px;
+      background:var(--secondary-bg); color:var(--dark);
+    }
+    .os-chip.win { background:#0078d4; color:#fff; }
+    .os-chip.lin { background:#f57800; color:#fff; }
+    .os-chip.mac { background:#555; color:#fff; }
+  </style>
+</head>
+<body>
+
+<!-- ═══ NAVBAR ═══ -->
+<header>
+  <nav id="navbar">
+    <a id="nav_logo" href="index.html">HI<span class="logo-dash"></span><em>TECH</em></a>
+    <ul id="nav_list">
+      <li class="nav-item"><a href="index.html">Início</a></li>
+      <li class="nav-item active"><a href="softwares.html">Softwares</a></li>
+      <li class="nav-item"><a href="tutoriais.html">Tutoriais</a></li>
+      <li class="nav-item"><a href="ebooks.html">eBooks</a></li>
+      <li class="nav-item"><a href="portfolio.html">Portfólio</a></li>
+    </ul>
+    <button class="btn-contact" onclick="location.href='index.html#contact'">Fale Comigo</button>
+    <button id="mobile_btn"><i class="fa-solid fa-bars"></i></button>
+  </nav>
+  <div id="mobile_menu">
+    <ul id="mobile_nav_list">
+      <li class="nav-item"><a href="index.html">Início</a></li>
+      <li class="nav-item active"><a href="softwares.html">Softwares</a></li>
+      <li class="nav-item"><a href="tutoriais.html">Tutoriais</a></li>
+      <li class="nav-item"><a href="ebooks.html">eBooks</a></li>
+      <li class="nav-item"><a href="portfolio.html">Portfólio</a></li>
+    </ul>
+    <button class="btn-contact" style="margin-top:8px" onclick="location.href='index.html#contact'">Fale Comigo</button>
+  </div>
+</header>
+
+<!-- ═══ HERO DA PÁGINA ═══ -->
+<div class="page-hero">
+  <p class="breadcrumb"><a href="index.html">Início</a> › Softwares</p>
+  <h1>Softwares que <span>instalo</span></h1>
+  <p>
+    Lista completa de softwares que instalo e configuro nos meus clientes —
+    com suporte, licenciamento e boas práticas de segurança.
+  </p>
+</div>
+
+<!-- ═══ CONTEÚDO ═══ -->
+<div class="page-content">
+
+  <!-- Filtros por categoria -->
+  <div class="filter-bar">
+    <button class="filter-btn active" data-filter="all">Todos</button>
+    <button class="filter-btn" data-filter="seguranca">Segurança</button>
+    <button class="filter-btn" data-filter="produtividade">Produtividade</button>
+    <button class="filter-btn" data-filter="rede">Rede & Infraestrutura</button>
+    <button class="filter-btn" data-filter="manutencao">Manutenção</button>
+    <button class="filter-btn" data-filter="servidor">Servidor</button>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       GRID DE SOFTWARES
+       Para adicionar um software novo:
+       1. Copie um bloco .item-card abaixo
+       2. Edite: ícone, badge, h3, descrição, os-chips e preço/status
+       ══════════════════════════════════════════ -->
+  <div class="card-grid" id="soft-grid">
+
+    <!-- ─── SEGURANÇA ─── -->
+    <div class="item-card" data-cat="seguranca">
+      <span class="card-icon">🛡️</span>
+      <span class="card-badge">Segurança</span>
+      <h3>Windows Defender + Config. Avançada</h3>
+      <p>Configuração completa do antivírus nativo do Windows com políticas de exclusão, agendamento e integração com Active Directory.</p>
+      <div class="os-chips">
+        <span class="os-chip win">Windows</span>
+      </div>
+      <div class="card-footer">
+        <span class="card-price free">Gratuito</span>
+        <a href="index.html#contact" class="card-btn"><i class="fa-solid fa-headset"></i> Contratar</a>
+      </div>
+    </div>
+
+    <div class="item-card" data-cat="seguranca">
+      <span class="card-icon">🔐</span>
+      <span class="card-badge">Segurança</span>
+      <h3>Bitwarden</h3>
+      <p>Gerenciador de senhas open-source. Instalação, configuração do servidor self-hosted e treinamento da equipe.</p>
+      <div class="os-chips">
+        <span class="os-chip win">Windows</span>
+        <span class="os-chip lin">Linux</span>
+      </div>
+      <div class="card-footer">
+        <span class="card-price free">Gratuito / Self-hosted</span>
+        <a href="index.html#contact" class="card-btn"><i class="fa-solid fa-headset"></i> Contratar</a>
+      </div>
+    </div>
+
+    <!-- ─── PRODUTIVIDADE ─── -->
+    <div class="item-card" data-cat="produtividade">
+      <span class="card-icon">📦</span>
+      <span class="card-badge">Produtividade</span>
+      <h3>Microsoft 365 (Office)</h3>
+      <p>Instalação, ativação e configuração do pacote Office 365. Word, Excel, PowerPoint, Outlook e Teams integrados.</p>
+      <div class="os-chips">
+        <span class="os-chip win">Windows</span>
+        <span class="os-chip mac">macOS</span>
+      </div>
+      <div class="card-footer">
+        <span class="card-price">Licença necessária</span>
+        <a href="index.html#contact" class="card-btn"><i class="fa-solid fa-headset"></i> Contratar</a>
+      </div>
+    </div>
+
+    <div class="item-card" data-cat="produtividade">
+      <span class="card-icon">💬</span>
+      <span class="card-badge">Produtividade</span>
+      <h3>Microsoft Teams</h3>
+      <p>Instalação, configuração de reuniões, canais e integração com Active Directory para autenticação corporativa.</p>
+      <div class="os-chips">
+        <span class="os-chip win">Windows</span>
+        <span class="os-chip lin">Linux</span>
+      </div>
+      <div class="card-footer">
+        <span class="card-price free">Gratuito / M365</span>
+        <a href="index.html#contact" class="card-btn"><i class="fa-solid fa-headset"></i> Contratar</a>
+      </div>
+    </div>
+
+    <!-- ─── REDE & INFRA ─── -->
+    <div class="item-card" data-cat="rede">
+      <span class="card-icon">🌐</span>
+      <span class="card-badge">Rede & Infraestrutura</span>
+      <h3>pfSense / OPNsense</h3>
+      <p>Instalação e configuração de firewall open-source. Regras, VPN, VLAN, balanceamento de carga e monitoramento.</p>
+      <div class="os-chips">
+        <span class="os-chip lin">FreeBSD / Linux</span>
+      </div>
+      <div class="card-footer">
+        <span class="card-price free">Gratuito</span>
+        <a href="index.html#contact" class="card-btn"><i class="fa-solid fa-headset"></i> Contratar</a>
+      </div>
+    </div>
+
+    <div class="item-card" data-cat="rede">
+      <span class="card-icon">📡</span>
+      <span class="card-badge">Rede & Infraestrutura</span>
+      <h3>Zabbix — Monitoramento</h3>
+      <p>Instalação do servidor Zabbix, configuração de hosts, alertas por e-mail/Telegram e dashboards personalizados.</p>
+      <div class="os-chips">
+        <span class="os-chip lin">Linux</span>
+      </div>
+      <div class="card-footer">
+        <span class="card-price free">Gratuito</span>
+        <a href="index.html#contact" class="card-btn"><i class="fa-solid fa-headset"></i> Contratar</a>
+      </div>
+    </div>
+
+    <div class="item-card" data-cat="rede">
+      <span class="card-icon">🔒</span>
+      <span class="card-badge">Rede & Infraestrutura</span>
+      <h3>OpenVPN / WireGuard</h3>
+      <p>Configuração de VPN site-to-site e acesso remoto seguro. Ideal para trabalho híbrido e múltiplas filiais.</p>
+      <div class="os-chips">
+        <span class="os-chip win">Windows</span>
+        <span class="os-chip lin">Linux</span>
+      </div>
+      <div class="card-footer">
+        <span class="card-price free">Gratuito</span>
+        <a href="index.html#contact" class="card-btn"><i class="fa-solid fa-headset"></i> Contratar</a>
+      </div>
+    </div>
+
+    <!-- ─── MANUTENÇÃO ─── -->
+    <div class="item-card" data-cat="manutencao">
+      <span class="card-icon">🛠️</span>
+      <span class="card-badge">Manutenção</span>
+      <h3>CCleaner + Ferramentas de Limpeza</h3>
+      <p>Limpeza de sistema, registro do Windows, remoção de arquivos temporários e otimização de inicialização.</p>
+      <div class="os-chips">
+        <span class="os-chip win">Windows</span>
+      </div>
+      <div class="card-footer">
+        <span class="card-price free">Gratuito / Pro</span>
+        <a href="index.html#contact" class="card-btn"><i class="fa-solid fa-headset"></i> Contratar</a>
+      </div>
+    </div>
+
+    <div class="item-card" data-cat="manutencao">
+      <span class="card-icon">💾</span>
+      <span class="card-badge">Manutenção</span>
+      <h3>Macrium Reflect — Backup & Imagem</h3>
+      <p>Criação de imagens de disco, backups agendados e restauração bare-metal. Ideal para proteção corporativa.</p>
+      <div class="os-chips">
+        <span class="os-chip win">Windows</span>
+      </div>
+      <div class="card-footer">
+        <span class="card-price free">Gratuito / Pro</span>
+        <a href="index.html#contact" class="card-btn"><i class="fa-solid fa-headset"></i> Contratar</a>
+      </div>
+    </div>
+
+    <!-- ─── SERVIDOR ─── -->
+    <div class="item-card" data-cat="servidor">
+      <span class="card-icon">🖥️</span>
+      <span class="card-badge">Servidor</span>
+      <h3>Windows Server 2019/2022</h3>
+      <p>Instalação, configuração de roles (AD DS, DNS, DHCP, File Server, IIS) e hardening de segurança.</p>
+      <div class="os-chips">
+        <span class="os-chip win">Windows Server</span>
+      </div>
+      <div class="card-footer">
+        <span class="card-price">Licença necessária</span>
+        <a href="index.html#contact" class="card-btn"><i class="fa-solid fa-headset"></i> Contratar</a>
+      </div>
+    </div>
+
+    <div class="item-card" data-cat="servidor">
+      <span class="card-icon">🐧</span>
+      <span class="card-badge">Servidor</span>
+      <h3>Ubuntu / Debian Server</h3>
+      <p>Instalação, configuração de serviços (Apache, Nginx, MySQL, PHP), SSL, Docker e hardening SSH.</p>
+      <div class="os-chips">
+        <span class="os-chip lin">Linux</span>
+      </div>
+      <div class="card-footer">
+        <span class="card-price free">Gratuito</span>
+        <a href="index.html#contact" class="card-btn"><i class="fa-solid fa-headset"></i> Contratar</a>
+      </div>
+    </div>
+
+    <div class="item-card" data-cat="servidor">
+      <span class="card-icon">🐳</span>
+      <span class="card-badge">Servidor</span>
+      <h3>Docker + Docker Compose</h3>
+      <p>Instalação, criação de containers, volumes, redes e deploy de aplicações em ambiente de produção.</p>
+      <div class="os-chips">
+        <span class="os-chip lin">Linux</span>
+        <span class="os-chip win">Windows</span>
+      </div>
+      <div class="card-footer">
+        <span class="card-price free">Gratuito</span>
+        <a href="index.html#contact" class="card-btn"><i class="fa-solid fa-headset"></i> Contratar</a>
+      </div>
+    </div>
+
+  </div><!-- /#soft-grid -->
+</div><!-- /.page-content -->
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+  <img src="wave.svg" alt=""/>
+  <div id="footer_items">
+    <span id="copyright">&copy; 2025 Hi-Tech</span>
+    <div class="social-btns">
+      <a href="https://wa.me/55XXXXXXXXXX" target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
+      <a href="https://instagram.com/seuperfil" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+      <a href="https://youtube.com/@seucanal" target="_blank"><i class="fa-brands fa-youtube"></i></a>
+    </div>
+  </div>
+</footer>
+
+<script>
+$(document).ready(function(){
+  $('#mobile_btn').on('click',function(){
+    $('#mobile_menu').toggleClass('active');
+    $(this).find('i').toggleClass('fa-bars fa-x');
+  });
+  $(window).on('scroll',function(){
+    $('header').css('box-shadow',$(window).scrollTop()>10?'0 2px 12px rgba(0,0,0,.10)':'none');
+  });
+
+  /* Filtro por categoria */
+  $('.filter-btn').on('click', function(){
+    $('.filter-btn').removeClass('active');
+    $(this).addClass('active');
+    const cat = $(this).data('filter');
+    if(cat === 'all'){
+      $('.item-card').fadeIn(250);
+    } else {
+      $('.item-card').each(function(){
+        $(this).data('cat') === cat ? $(this).fadeIn(250) : $(this).hide();
+      });
+    }
+  });
+
+  ScrollReveal().reveal('.item-card', { origin:'bottom', duration:700, distance:'20px', interval:100 });
+});
+</script>
+</body>
+</html>

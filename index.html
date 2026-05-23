@@ -236,6 +236,12 @@
     #products .section-subtitle { margin-bottom:8px; }
     .products-note { font-size:.88rem; color:var(--muted); margin-bottom:32px; }
 
+    #products .btn-ver-mais {
+      flex-shrink:0; background:var(--accent); color:var(--white);
+      border-radius:var(--radius); padding:10px 20px; font-weight:700; font-size:.9rem;
+      border:none; cursor:pointer; transition:background .3s; white-space:nowrap; margin-left: auto;
+    }
+
     #product-grid {
       width:100%; display:flex; justify-content:center;
       flex-wrap:wrap; gap:24px; margin-top:8px;
@@ -290,81 +296,100 @@
     @media(max-width:580px) { .product-card { width:100%; } }
 
     /* =============================================
-       SOBRE MIM + DEPOIMENTOS (#about)
+       SOBRE MIM — NOVO LAYOUT
+       Coluna esq: foto fixa | Coluna dir: conteúdo
        ============================================= */
     #about {
-      display:flex; align-items:flex-start;
-      justify-content:center; gap:60px;
-      min-height:80vh; flex-wrap:wrap;
+      display:grid;
+      grid-template-columns:300px 1fr;
+      gap:48px;
+      align-items:start;
+      padding:60px 8%;
       background:var(--primary-bg);
     }
 
-    /* ── Foto ── */
+    /* ── Coluna esquerda — foto ── */
     #about-photo-wrap {
-      flex-shrink:0; display:flex; flex-direction:column;
-      align-items:center; gap:0; position:relative;
+      position:sticky; top:90px;          /* gruda ao rolar */
+      display:flex; flex-direction:column;
+      align-items:center; gap:0;
+      flex-shrink:0;
     }
     #about-photo-bg {
-      width:300px; height:380px;
-      background:var(--accent); border-radius:120px 120px 60px 60px;
-      position:absolute; bottom:0; left:50%; transform:translateX(-50%);
-      z-index:0;
+      width:280px; height:360px;
+      background:var(--accent);
+      border-radius:120px 120px 60px 60px;
+      position:absolute; bottom:0;
+      left:50%; transform:translateX(-50%);
+      bottom: 800;
+      
     }
     #about-photo {
-      width:290px; height:370px; object-fit:cover; object-position:top center;
+      width:270px; height:350px;
+      object-fit:cover; object-position:top center;
       border-radius:110px 110px 55px 55px;
       position:relative; z-index:1;
-      /* ↓ substitua chef.png pela sua foto */
-      filter:drop-shadow(0 8px 18px rgba(0,0,0,.18));
+      filter:drop-shadow(0 8px 18px rgba(0,0,0,.22));
     }
-    /* ── badge flutuante ── */
+    /* wraper precisa ter altura pra o bg posicionar */
+    #about-photo-wrap { min-height:360px; position:relative; }
+
     .about-badge {
-      position:absolute; bottom:10px; right:-20px; z-index:2;
+      position:absolute; bottom:-10px; right:-14px; z-index:2;
       background:var(--white); border-radius:var(--radius);
       padding:10px 16px; box-shadow:var(--shadow);
       font-size:.82rem; font-weight:700; white-space:nowrap;
     }
     .about-badge span { color:var(--accent); margin-right:4px; }
 
-    /* ── Conteúdo ── */
+    /* ── Coluna direita — conteúdo ── */
     #about-content {
-      flex:1; min-width:280px; max-width:540px;
       display:flex; flex-direction:column; gap:20px;
+      min-width:0;
     }
     #about-content .section-title    { margin-bottom:0; }
     #about-content .section-subtitle { font-size:1.9rem; }
 
-    /* balão "sobre mim" */
+    /* balão bio */
     .about-bubble {
       background:var(--white); border-radius:16px 16px 16px 4px;
       padding:20px 24px; box-shadow:var(--shadow);
       font-size:.92rem; color:var(--muted); line-height:1.8;
-      position:relative;
     }
     .about-bubble strong { color:var(--dark); }
 
-    /* timeline rápida */
-    .about-timeline { display:flex; flex-direction:column; gap:12px; margin-top:4px; }
-    .tl-item { display:flex; gap:14px; align-items:flex-start; }
-    .tl-year {
-      flex-shrink:0; width:52px; font-family:'Bebas Neue',sans-serif;
-      font-size:1.2rem; color:var(--accent); padding-top:2px;
+    /* ── Timeline — grid 2 colunas dentro da coluna direita ── */
+    .about-timeline {
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:12px;
     }
-    .tl-text h4 { font-size:.88rem; font-weight:700; }
-    .tl-text p  { font-size:.82rem; color:var(--muted); line-height:1.6; }
+    .tl-item.tl-full { grid-column:1 / -1; }
+
+    .tl-item {
+      display:flex; gap:10px; align-items:flex-start;
+      background:var(--white); border-radius:var(--radius);
+      padding:12px 14px; box-shadow:0 2px 8px rgba(0,0,0,.07);
+      transition:transform .25s, box-shadow .25s;
+    }
+    .tl-item:hover { transform:translateY(-3px); box-shadow:0 8px 20px rgba(0,0,0,.12); }
+
+    .tl-year {
+      flex-shrink:0; width:44px;
+      font-family:'Bebas Neue',sans-serif;
+      font-size:1.1rem; color:var(--accent); padding-top:1px;
+    }
+    .tl-text h4 { font-size:.85rem; font-weight:700; }
+    .tl-text p  { font-size:.78rem; color:var(--muted); line-height:1.55; margin-top:2px; }
 
     /* ── Depoimentos ── */
-    #feedbacks {
-      display:flex; flex-direction:column; gap:16px; margin-top:24px;
-    }
+    #feedbacks { display:flex; flex-direction:column; gap:16px; }
     .feedback {
       display:flex; align-items:center; gap:16px;
       background:var(--white); padding:14px; border-radius:var(--radius);
       box-shadow:var(--shadow);
     }
-    .feedback-avatar {
-      width:80px; height:80px; border-radius:50%; object-fit:cover; flex-shrink:0;
-    }
+    .feedback-avatar { width:80px; height:80px; border-radius:50%; object-fit:cover; flex-shrink:0; }
     .feedback-content p { display:flex; justify-content:space-between; font-weight:600; font-size:.9rem; }
     .feedback-content p span { color:var(--accent); }
     .feedback-content blockquote {
@@ -372,23 +397,17 @@
       border-left:3px solid var(--accent-light); padding-left:10px;
     }
 
-    /* ── Disqus ── */
-    #disqus-wrap {
-      width:100%; margin-top:32px;
-      background:var(--white); border-radius:20px;
-      padding:24px; box-shadow:var(--shadow);
-    }
-    #disqus-wrap h3 {
-      font-size:1.1rem; font-weight:700; margin-bottom:16px;
-      color:var(--dark); display:flex; align-items:center; gap:8px;
-    }
-    #disqus-wrap h3 i { color:var(--accent); }
-    #disqus_thread { min-height:200px; }
-
+    /* ── Responsivo ── */
     @media(max-width:900px){
-      #about { flex-direction:column; align-items:center; }
-      #about-content { max-width:100%; }
-      #about-photo-wrap { display:none; }   /* esconde foto em mobile pequeno */
+      #about {
+        grid-template-columns:1fr;
+      }
+      #about-photo-wrap { display:none; }
+      .about-timeline { grid-template-columns:1fr; }
+      .tl-item.tl-full { grid-column:1; }
+    }
+    @media(max-width:580px){
+      .about-timeline { grid-template-columns:1fr; }
     }
 
     /* =============================================
@@ -460,14 +479,13 @@
     </a>
 
     <!-- ── MENU CENTRAL ─────────────────────────
-         Para adicionar/remover links edite aqui  -->
+         Cada link aponta para sua própria página  -->
     <ul id="nav_list">
-      <li class="nav-item active"><a href="#home">Início</a></li>
-      <li class="nav-item"><a href="#products">Softwares</a></li>
-      <li class="nav-item"><a href="#products">Tutoriais</a></li>
-      <li class="nav-item"><a href="#products">eBooks</a></li>
-      <li class="nav-item"><a href="#about">Portfólio</a></li>
-      <li class="nav-item"><a href="#contact">Contato</a></li>
+      <li class="nav-item active"><a href="index.html">Início</a></li>
+      <li class="nav-item"><a href="softwares.html">Softwares</a></li>
+      <li class="nav-item"><a href="tutoriais.html">Tutoriais</a></li>
+      <li class="nav-item"><a href="ebooks.html">eBooks</a></li>
+      <li class="nav-item"><a href="index.html#about">Portfólio</a></li>
     </ul>
 
     <!-- ── BOTÃO CONTATO ──────────────────────── -->
@@ -484,10 +502,11 @@
   <!-- Menu mobile -->
   <div id="mobile_menu">
     <ul id="mobile_nav_list">
-      <li class="nav-item"><a href="#home">Início</a></li>
-      <li class="nav-item"><a href="#products">Produtos</a></li>
-      <li class="nav-item"><a href="#about">Sobre Mim</a></li>
-      <li class="nav-item"><a href="#contact">Contato</a></li>
+      <li class="nav-item"><a href="index.html">Início</a></li>
+      <li class="nav-item"><a href="softwares.html">Softwares</a></li>
+      <li class="nav-item"><a href="tutoriais.html">Tutoriais</a></li>
+      <li class="nav-item"><a href="ebooks.html">eBooks</a></li>
+      <li class="nav-item"><a href="index.html#about">Portfólio</a></li>
     </ul>
     <button class="btn-contact" style="margin-top:8px"
       onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">
@@ -684,6 +703,11 @@
     </div>
 
   </div><!-- /#product-grid -->
+
+  <!-- Botão Ver mais — mesmo estilo do Fale Comigo -->
+  <button class="btn-ver-mais" style="margin-top:28px" onclick="alert('Em breve: página completa de produtos!')">
+    Ver mais...
+  </button>
 </section>
 
 
@@ -697,13 +721,14 @@
   <div id="about-photo-wrap">
     <div id="about-photo-bg"></div>
     <img id="about-photo"
-         src="chef.png"
+         src="src/images/eu2.png"
          alt="Foto do especialista"
-         title="Substitua chef.png pela sua foto" />
+         title="Sua foto" />
     <div class="about-badge">
       <span>⚙️</span> Especialista em TI
     </div>
   </div>
+  
 
   <!-- ── CONTEÚDO ────────────────────────────────
        Edite os textos abaixo à vontade            -->
@@ -726,9 +751,9 @@
       no Brasil e no mundo. Acredito que tecnologia bem aplicada transforma vidas e negócios.
     </div>
 
-    <!-- Timeline rápida -->
+    <!-- Timeline lado a lado em grid 2 colunas -->
     <div class="about-timeline">
-      <!-- Edite ano e descrição de cada etapa -->
+
       <div class="tl-item">
         <div class="tl-year">2013</div>
         <div class="tl-text">
@@ -736,27 +761,55 @@
           <p>Suporte técnico, montagem e manutenção de computadores.</p>
         </div>
       </div>
+
       <div class="tl-item">
         <div class="tl-year">2016</div>
         <div class="tl-text">
-          <h4>Infraestrutura corporativa</h4>
-          <p>Windows Server, Active Directory, redes e implantação em empresas.</p>
+          <h4>Formado em Redes</h4>
+          <p>Conclusão da formação técnica em Redes de Computadores.</p>
         </div>
       </div>
+
       <div class="tl-item">
-        <div class="tl-year">2019</div>
+        <div class="tl-year">2017</div>
         <div class="tl-text">
-          <h4>Linux & Segurança</h4>
-          <p>pfSense, VPN, VLAN e segurança em redes corporativas.</p>
+          <h4>Primeira Experiência — Estágio</h4>
+          <p>Primeiro contato profissional com infraestrutura corporativa.</p>
         </div>
       </div>
+
+      <div class="tl-item">
+        <div class="tl-year">2018</div>
+        <div class="tl-text">
+          <h4>Primeiro Emprego como Técnico TI</h4>
+          <p>Suporte técnico, redes e administração de sistemas.</p>
+        </div>
+      </div>
+
       <div class="tl-item">
         <div class="tl-year">2022</div>
         <div class="tl-text">
-          <h4>Criação de conteúdo</h4>
-          <p>Tutoriais, eBooks e cursos voltados a técnicos e entusiastas de TI.</p>
+          <h4>Tornando-se Analista</h4>
+          <p>Transição para análise de sistemas e infraestrutura avançada.</p>
         </div>
       </div>
+
+      <div class="tl-item">
+        <div class="tl-year">2024</div>
+        <div class="tl-text">
+          <h4>TI na Área da Saúde</h4>
+          <p>Experiência com sistemas e infraestrutura em ambiente hospitalar.</p>
+        </div>
+      </div>
+
+      <div class="tl-item tl-full">
+        <div class="tl-year">2026</div>
+        <div class="tl-text">
+          <h4>Analista & Criador de Conteúdo</h4>
+          <p>Crescendo cada vez mais como analista e produzindo tutoriais, eBooks e cursos voltados a técnicos e entusiastas de TI.</p>
+        </div>
+      </div>
+
     </div>
 
     <!-- ── Depoimentos fixos (visuais) ───────────────
@@ -800,20 +853,18 @@
 
     </div><!-- /#feedbacks -->
 
-    <!-- ── DISQUS (comentários com login social) ──────
-         PASSO A PASSO PARA ATIVAR:
-         1. Acesse https://disqus.com e crie uma conta gratuita
-         2. Clique em "Get Started" → "I want to install Disqus on my site"
-         3. Escolha um "Shortname" (ex: hi-tech-br)
-         4. Substitua 'SEU-SHORTNAME-AQUI' abaixo pelo shortname escolhido
-         5. Pronto! O Disqus permite login com Google, Facebook, Twitter e e-mail
-         ─────────────────────────────────────────────── -->
-    <div id="disqus-wrap">
-      <h3><i class="fa-solid fa-comments"></i> Deixe seu comentário</h3>
-      <div id="disqus_thread"></div>
-    </div>
+    <!-- ── Área de comentários futura ──────────────
+         Será implementada na próxima etapa          -->
 
   </div><!-- /#about-content -->
+
+  <!-- Botão Ver mais portfólio -->
+  <div style="grid-column:1/-1; text-align:center; margin-top:8px;">
+    <a href="portfolio.html" class="btn-contact" style="display:inline-flex;align-items:center;gap:8px;text-decoration:none;">
+      Ver portfólio completo &nbsp;→
+    </a>
+  </div>
+
 </section><!-- /#about -->
 
 
@@ -893,24 +944,6 @@
      SCRIPTS
 ═══════════════════════════ -->
 <script>
-/* ─────────────────────────────────────────────
-   DISQUS — substitua 'SEU-SHORTNAME-AQUI'
-   pelo shortname que você criou em disqus.com
-   ───────────────────────────────────────────── */
-var disqus_config = function () {
-  this.page.url = window.location.href;
-  this.page.identifier = 'hitech-home';
-};
-(function() {
-  var d = document, s = d.createElement('script');
-  // ↓ TROQUE AQUI pelo seu shortname do Disqus
-  s.src = 'https://SEU-SHORTNAME-AQUI.disqus.com/embed.js';
-  s.setAttribute('data-timestamp', +new Date());
-  (d.head || d.body).appendChild(s);
-})();
-</script>
-
-<script>
 $(document).ready(function () {
 
   /* ── Menu mobile ── */
@@ -943,14 +976,14 @@ $(document).ready(function () {
   });
 
   /* ── ScrollReveal ── */
-  ScrollReveal().reveal('#cta',          { origin:'left',  duration:1200, distance:'24px' });
-  ScrollReveal().reveal('.word-cloud',   { origin:'right', duration:1200, distance:'24px' });
-  ScrollReveal().reveal('.product-card', { origin:'bottom',duration:800,  distance:'20px', interval:120 });
-  ScrollReveal().reveal('#about-photo-wrap', { origin:'left', duration:1000, distance:'24px' });
-  ScrollReveal().reveal('.about-bubble', { origin:'right', duration:900,  distance:'20px' });
-  ScrollReveal().reveal('.tl-item',      { origin:'right', duration:700,  distance:'16px', interval:100 });
-  ScrollReveal().reveal('.feedback',     { origin:'bottom',duration:700,  distance:'16px', interval:120 });
-  ScrollReveal().reveal('.contact-card', { origin:'bottom',duration:700,  distance:'16px', interval:100 });
+  ScrollReveal().reveal('#cta',             { origin:'left',   duration:1200, distance:'24px' });
+  ScrollReveal().reveal('.word-cloud',      { origin:'right',  duration:1200, distance:'24px' });
+  ScrollReveal().reveal('.product-card',    { origin:'bottom', duration:800,  distance:'20px', interval:120 });
+  ScrollReveal().reveal('#about-photo-wrap',{ origin:'left',   duration:1000, distance:'24px' });
+  ScrollReveal().reveal('.about-bubble',    { origin:'right',  duration:900,  distance:'20px' });
+  ScrollReveal().reveal('.tl-item',         { origin:'bottom', duration:600,  distance:'16px', interval:80 });
+  ScrollReveal().reveal('.feedback',        { origin:'bottom', duration:700,  distance:'16px', interval:120 });
+  ScrollReveal().reveal('.contact-card',    { origin:'bottom', duration:700,  distance:'16px', interval:100 });
 });
 </script>
 

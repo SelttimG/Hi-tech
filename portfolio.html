@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Portfólio | Hi-Tech</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous"/>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Bebas+Neue&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="shared.css"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/scrollreveal"></script>
+  <style>
+    /* ── Card de projeto ── */
+    .proj-card {
+      background:var(--white); border-radius:20px; overflow:hidden;
+      box-shadow:var(--shadow); transition:transform .3s, box-shadow .3s;
+      display:flex; flex-direction:column;
+    }
+    .proj-card:hover { transform:translateY(-6px); box-shadow:0 14px 32px rgba(0,0,0,.13); }
+
+    /* thumb colorido por categoria */
+    .proj-thumb {
+      height:140px; display:flex; align-items:center; justify-content:center;
+      position:relative; overflow:hidden;
+    }
+    .proj-thumb-icon { font-size:3.5rem; z-index:1; }
+    .proj-thumb-label {
+      position:absolute; font-family:'Bebas Neue',sans-serif;
+      font-size:5rem; letter-spacing:3px; opacity:.12; color:var(--white);
+      user-select:none;
+    }
+    .proj-num {
+      position:absolute; top:12px; left:14px;
+      font-family:'Bebas Neue',sans-serif; font-size:2.2rem;
+      color:rgba(255,255,255,.4); line-height:1;
+    }
+
+    .proj-body { padding:20px 22px; display:flex; flex-direction:column; gap:10px; flex:1; }
+    .proj-body h3 { font-size:1rem; font-weight:700; }
+    .proj-body p  { font-size:.84rem; color:var(--muted); line-height:1.7; flex:1; }
+
+    .proj-tags { display:flex; gap:6px; flex-wrap:wrap; margin-top:2px; }
+    .proj-tag {
+      font-size:.67rem; font-weight:700; padding:3px 9px; border-radius:20px;
+      background:var(--secondary-bg); color:var(--dark);
+    }
+
+    .proj-status {
+      display:inline-flex; align-items:center; gap:6px;
+      font-size:.74rem; font-weight:700; padding-top:10px;
+      border-top:1px solid rgba(0,0,0,.06); color:var(--muted);
+    }
+    .proj-status .dot {
+      width:8px; height:8px; border-radius:50%;
+    }
+    .dot-done    { background:#2a9d5c; }
+    .dot-prod    { background:var(--accent); }
+    .dot-manut   { background:#2196f3; }
+
+    /* Seção de skills */
+    .skills-section { margin-top:60px; }
+    .skills-section h2 { font-size:1.6rem; font-weight:800; margin-bottom:6px; }
+    .skills-section p  { color:var(--muted); font-size:.9rem; margin-bottom:28px; }
+
+    .skill-bars { display:flex; flex-direction:column; gap:14px; max-width:680px; }
+    .skill-row { display:flex; align-items:center; gap:14px; }
+    .skill-name { width:160px; font-size:.86rem; font-weight:600; flex-shrink:0; }
+    .skill-bar-bg { flex:1; height:8px; background:var(--secondary-bg); border-radius:20px; overflow:hidden; }
+    .skill-bar-fill {
+      height:100%; border-radius:20px;
+      background:linear-gradient(90deg, var(--accent), var(--accent-light));
+      width:0; transition:width 1.4s ease;
+    }
+    .skill-pct { font-size:.78rem; color:var(--muted); width:36px; text-align:right; flex-shrink:0; }
+
+    /* Filtro */
+    .filter-bar { display:flex; flex-wrap:wrap; gap:10px; margin-bottom:32px; }
+    .filter-btn {
+      border:2px solid var(--accent-light); background:transparent;
+      border-radius:20px; padding:7px 20px; font-family:'Poppins',sans-serif;
+      font-size:.82rem; font-weight:600; cursor:pointer; color:var(--muted); transition:.2s;
+    }
+    .filter-btn.active, .filter-btn:hover { background:var(--accent); color:var(--white); border-color:var(--accent); }
+  </style>
+</head>
+<body>
+
+<!-- ═══ NAVBAR ═══ -->
+<header>
+  <nav id="navbar">
+    <a id="nav_logo" href="index.html">HI<span class="logo-dash"></span><em>TECH</em></a>
+    <ul id="nav_list">
+      <li class="nav-item"><a href="index.html">Início</a></li>
+      <li class="nav-item"><a href="softwares.html">Softwares</a></li>
+      <li class="nav-item"><a href="tutoriais.html">Tutoriais</a></li>
+      <li class="nav-item"><a href="ebooks.html">eBooks</a></li>
+      <li class="nav-item active"><a href="portfolio.html">Portfólio</a></li>
+    </ul>
+    <button class="btn-contact" onclick="location.href='index.html#contact'">Fale Comigo</button>
+    <button id="mobile_btn"><i class="fa-solid fa-bars"></i></button>
+  </nav>
+  <div id="mobile_menu">
+    <ul id="mobile_nav_list">
+      <li class="nav-item"><a href="index.html">Início</a></li>
+      <li class="nav-item"><a href="softwares.html">Softwares</a></li>
+      <li class="nav-item"><a href="tutoriais.html">Tutoriais</a></li>
+      <li class="nav-item"><a href="ebooks.html">eBooks</a></li>
+      <li class="nav-item active"><a href="portfolio.html">Portfólio</a></li>
+    </ul>
+    <button class="btn-contact" style="margin-top:8px" onclick="location.href='index.html#contact'">Fale Comigo</button>
+  </div>
+</header>
+
+<!-- ═══ HERO ═══ -->
+<div class="page-hero">
+  <p class="breadcrumb"><a href="index.html">Início</a> › Portfólio</p>
+  <h1>Sistemas & <span>Projetos</span></h1>
+  <p>
+    Aplicações, sistemas e infraestruturas que construí ao longo da minha experiência
+    profissional — do suporte técnico à administração de ambientes corporativos.
+  </p>
+</div>
+
+<!-- ═══ CONTEÚDO ═══ -->
+<div class="page-content">
+
+  <!-- Filtros -->
+  <div class="filter-bar">
+    <button class="filter-btn active" data-filter="all">Todos</button>
+    <button class="filter-btn" data-filter="infra">Infraestrutura</button>
+    <button class="filter-btn" data-filter="web">Aplicação Web</button>
+    <button class="filter-btn" data-filter="rede">Rede & Segurança</button>
+    <button class="filter-btn" data-filter="saude">TI na Saúde</button>
+    <button class="filter-btn" data-filter="automacao">Automação</button>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       GRID DE PROJETOS
+       Para adicionar um projeto:
+       1. Copie um bloco .proj-card
+       2. Edite: data-cat, cor do thumb, ícone,
+          número, h3, p, tags, status e link
+       Status disponíveis:
+         dot-done  = Concluído
+         dot-prod  = Em produção
+         dot-manut = Em manutenção
+       ══════════════════════════════════════════ -->
+  <div class="card-grid" id="proj-grid">
+
+    <!-- ─── INFRAESTRUTURA ─── -->
+    <div class="proj-card" data-cat="infra">
+      <div class="proj-thumb" style="background:linear-gradient(135deg,#1e40af,#3b82f6)">
+        <span class="proj-num">01</span>
+        <span class="proj-thumb-label">AD</span>
+        <span class="proj-thumb-icon">🏢</span>
+      </div>
+      <div class="proj-body">
+        <h3>Implantação de Infraestrutura Corporativa</h3>
+        <p>Implementação completa de ambiente Windows Server com AD DS, DNS, DHCP, File Server, GPO e impressão centralizada para empresa com 80 usuários no setor logístico.</p>
+        <div class="proj-tags">
+          <span class="proj-tag">Windows Server 2022</span>
+          <span class="proj-tag">Active Directory</span>
+          <span class="proj-tag">GPO</span>
+          <span class="proj-tag">DHCP</span>
+        </div>
+        <span class="proj-status">
+          <span class="dot dot-prod"></span> Em produção desde 2022
+        </span>
+      </div>
+    </div>
+
+    <!-- ─── REDE & SEGURANÇA ─── -->
+    <div class="proj-card" data-cat="rede">
+      <div class="proj-thumb" style="background:linear-gradient(135deg,#065f46,#10b981)">
+        <span class="proj-num">02</span>
+        <span class="proj-thumb-label">VPN</span>
+        <span class="proj-thumb-icon">🔒</span>
+      </div>
+      <div class="proj-body">
+        <h3>VPN Site-to-Site — 3 Filiais</h3>
+        <p>Configuração de firewall pfSense com VPN IPsec conectando matriz e 2 filiais, VLANs segmentadas por departamento e sistema de monitoramento com alertas automáticos.</p>
+        <div class="proj-tags">
+          <span class="proj-tag">pfSense</span>
+          <span class="proj-tag">IPsec VPN</span>
+          <span class="proj-tag">VLAN</span>
+          <span class="proj-tag">Zabbix</span>
+        </div>
+        <span class="proj-status">
+          <span class="dot dot-prod"></span> Em produção desde 2021
+        </span>
+      </div>
+    </div>
+
+    <!-- ─── APLICAÇÃO WEB ─── -->
+    <div class="proj-card" data-cat="web">
+      <div class="proj-thumb" style="background:linear-gradient(135deg,#7c2d12,#f97316)">
+        <span class="proj-num">03</span>
+        <span class="proj-thumb-label">WEB</span>
+        <span class="proj-thumb-icon">🌐</span>
+      </div>
+      <div class="proj-body">
+        <h3>Portal Intranet Corporativa</h3>
+        <p>Desenvolvimento e implantação de portal intranet com IIS, PHP e MySQL no Windows Server, autenticação integrada ao Active Directory via LDAP e painel de chamados internos.</p>
+        <div class="proj-tags">
+          <span class="proj-tag">IIS</span>
+          <span class="proj-tag">PHP</span>
+          <span class="proj-tag">MySQL</span>
+          <span class="proj-tag">Active Directory</span>
+        </div>
+        <span class="proj-status">
+          <span class="dot dot-prod"></span> Em produção desde 2020
+        </span>
+      </div>
+    </div>
+
+    <!-- ─── LINUX SERVER ─── -->
+    <div class="proj-card" data-cat="web infra">
+      <div class="proj-thumb" style="background:linear-gradient(135deg,#4a1d96,#7c3aed)">
+        <span class="proj-num">04</span>
+        <span class="proj-thumb-label">LNUX</span>
+        <span class="proj-thumb-icon">🐧</span>
+      </div>
+      <div class="proj-body">
+        <h3>Servidor Linux — 4 Aplicações Web</h3>
+        <p>Deploy de 4 aplicações web em Ubuntu Server com Nginx como reverse proxy, SSL via Let's Encrypt, Docker Compose e backup automatizado para armazenamento em nuvem.</p>
+        <div class="proj-tags">
+          <span class="proj-tag">Ubuntu Server</span>
+          <span class="proj-tag">Nginx</span>
+          <span class="proj-tag">Docker</span>
+          <span class="proj-tag">SSL</span>
+        </div>
+        <span class="proj-status">
+          <span class="dot dot-prod"></span> Em produção desde 2023
+        </span>
+      </div>
+    </div>
+
+    <!-- ─── TI NA SAÚDE ─── -->
+    <div class="proj-card" data-cat="saude infra">
+      <div class="proj-thumb" style="background:linear-gradient(135deg,#be123c,#f43f5e)">
+        <span class="proj-num">05</span>
+        <span class="proj-thumb-label">HLTH</span>
+        <span class="proj-thumb-icon">🏥</span>
+      </div>
+      <div class="proj-body">
+        <h3>Infraestrutura TI — Ambiente Hospitalar</h3>
+        <p>Implementação e gestão de infraestrutura de TI em unidade de saúde: servidores, rede segmentada por área, integração com sistemas de prontuário eletrônico e política de backup crítico.</p>
+        <div class="proj-tags">
+          <span class="proj-tag">Windows Server</span>
+          <span class="proj-tag">VLAN</span>
+          <span class="proj-tag">Backup</span>
+          <span class="proj-tag">PEP</span>
+        </div>
+        <span class="proj-status">
+          <span class="dot dot-prod"></span> Em produção desde 2024
+        </span>
+      </div>
+    </div>
+
+    <!-- ─── AUTOMAÇÃO ─── -->
+    <div class="proj-card" data-cat="automacao">
+      <div class="proj-thumb" style="background:linear-gradient(135deg,#134e4a,#14b8a6)">
+        <span class="proj-num">06</span>
+        <span class="proj-thumb-label">AUTO</span>
+        <span class="proj-thumb-icon">⚙️</span>
+      </div>
+      <div class="proj-body">
+        <h3>Scripts de Automação — Active Directory</h3>
+        <p>Criação de scripts PowerShell para automação de onboarding/offboarding de usuários, geração de relatórios de auditoria e monitoramento de saúde do AD via e-mail.</p>
+        <div class="proj-tags">
+          <span class="proj-tag">PowerShell</span>
+          <span class="proj-tag">Active Directory</span>
+          <span class="proj-tag">Automação</span>
+        </div>
+        <span class="proj-status">
+          <span class="dot dot-done"></span> Concluído — 2023
+        </span>
+      </div>
+    </div>
+
+    <div class="proj-card" data-cat="automacao web">
+      <div class="proj-thumb" style="background:linear-gradient(135deg,#1e3a5f,#2563eb)">
+        <span class="proj-num">07</span>
+        <span class="proj-thumb-label">MON</span>
+        <span class="proj-thumb-icon">📊</span>
+      </div>
+      <div class="proj-body">
+        <h3>Dashboard de Monitoramento — Zabbix</h3>
+        <p>Instalação e configuração do Zabbix Server com dashboards personalizados, alertas por Telegram e e-mail, monitoramento de 40+ hosts em ambiente misto Windows e Linux.</p>
+        <div class="proj-tags">
+          <span class="proj-tag">Zabbix</span>
+          <span class="proj-tag">Linux</span>
+          <span class="proj-tag">Telegram Bot</span>
+          <span class="proj-tag">SNMP</span>
+        </div>
+        <span class="proj-status">
+          <span class="dot dot-manut"></span> Em manutenção ativa
+        </span>
+      </div>
+    </div>
+
+    <div class="proj-card" data-cat="rede automacao">
+      <div class="proj-thumb" style="background:linear-gradient(135deg,#713f12,#ca8a04)">
+        <span class="proj-num">08</span>
+        <span class="proj-thumb-label">BCK</span>
+        <span class="proj-thumb-icon">💾</span>
+      </div>
+      <div class="proj-body">
+        <h3>Solução de Backup Automatizado</h3>
+        <p>Implementação de política de backup 3-2-1 com Veeam Backup e scripts Bash, cobrindo servidores físicos, VMs e estações críticas com retenção e alertas de falha.</p>
+        <div class="proj-tags">
+          <span class="proj-tag">Veeam</span>
+          <span class="proj-tag">Bash Script</span>
+          <span class="proj-tag">Backup 3-2-1</span>
+        </div>
+        <span class="proj-status">
+          <span class="dot dot-prod"></span> Em produção desde 2022
+        </span>
+      </div>
+    </div>
+
+  </div><!-- /#proj-grid -->
+
+  <!-- Skills -->
+  <div class="skills-section">
+    <h2>Minhas Competências Técnicas</h2>
+    <p>Tecnologias e ferramentas que domino e aplico nos projetos.</p>
+    <div class="skill-bars">
+      <div class="skill-row">
+        <span class="skill-name">Windows Server</span>
+        <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="95"></div></div>
+        <span class="skill-pct">95%</span>
+      </div>
+      <div class="skill-row">
+        <span class="skill-name">Active Directory</span>
+        <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="92"></div></div>
+        <span class="skill-pct">92%</span>
+      </div>
+      <div class="skill-row">
+        <span class="skill-name">Linux / Ubuntu</span>
+        <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="85"></div></div>
+        <span class="skill-pct">85%</span>
+      </div>
+      <div class="skill-row">
+        <span class="skill-name">Redes / TCP-IP</span>
+        <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="88"></div></div>
+        <span class="skill-pct">88%</span>
+      </div>
+      <div class="skill-row">
+        <span class="skill-name">pfSense / VPN</span>
+        <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="82"></div></div>
+        <span class="skill-pct">82%</span>
+      </div>
+      <div class="skill-row">
+        <span class="skill-name">Servidores Web</span>
+        <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="78"></div></div>
+        <span class="skill-pct">78%</span>
+      </div>
+      <div class="skill-row">
+        <span class="skill-name">Docker</span>
+        <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="72"></div></div>
+        <span class="skill-pct">72%</span>
+      </div>
+      <div class="skill-row">
+        <span class="skill-name">PowerShell</span>
+        <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="80"></div></div>
+        <span class="skill-pct">80%</span>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /.page-content -->
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+  <img src="wave.svg" alt=""/>
+  <div id="footer_items">
+    <span id="copyright">&copy; 2025 Hi-Tech</span>
+    <div class="social-btns">
+      <a href="https://wa.me/55XXXXXXXXXX" target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
+      <a href="https://instagram.com/seuperfil" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+      <a href="https://youtube.com/@seucanal" target="_blank"><i class="fa-brands fa-youtube"></i></a>
+    </div>
+  </div>
+</footer>
+
+<script>
+$(document).ready(function(){
+  $('#mobile_btn').on('click',function(){
+    $('#mobile_menu').toggleClass('active');
+    $(this).find('i').toggleClass('fa-bars fa-x');
+  });
+  $(window).on('scroll',function(){
+    $('header').css('box-shadow',$(window).scrollTop()>10?'0 2px 12px rgba(0,0,0,.10)':'none');
+  });
+
+  /* Filtro */
+  $('.filter-btn').on('click', function(){
+    $('.filter-btn').removeClass('active');
+    $(this).addClass('active');
+    const cat = $(this).data('filter');
+    if(cat === 'all'){
+      $('.proj-card').fadeIn(250);
+    } else {
+      $('.proj-card').each(function(){
+        const cats = ($(this).data('cat') || '').split(' ');
+        cats.includes(cat) ? $(this).fadeIn(250) : $(this).hide();
+      });
+    }
+  });
+
+  /* Anima barras de skill quando entram na tela */
+  ScrollReveal().reveal('.skill-row', {
+    origin:'left', duration:700, distance:'20px', interval:80,
+    afterReveal: function(el){
+      const fill = el.querySelector('.skill-bar-fill');
+      if(fill) fill.style.width = fill.dataset.width + '%';
+    }
+  });
+
+  ScrollReveal().reveal('.proj-card', { origin:'bottom', duration:700, distance:'20px', interval:100 });
+});
+</script>
+</body>
+</html>

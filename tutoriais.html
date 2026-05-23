@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tutoriais | Hi-Tech</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous"/>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Bebas+Neue&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="shared.css"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/scrollreveal"></script>
+  <style>
+    /* ── Card de vídeo/curso ── */
+    .tut-card {
+      background:var(--white); border-radius:20px; overflow:hidden;
+      box-shadow:var(--shadow); transition:transform .3s, box-shadow .3s;
+      display:flex; flex-direction:column;
+    }
+    .tut-card:hover { transform:translateY(-6px); box-shadow:0 14px 32px rgba(0,0,0,.13); }
+
+    .tut-thumb {
+      height:165px; background:var(--secondary-bg);
+      display:flex; align-items:center; justify-content:center;
+      position:relative; overflow:hidden;
+    }
+    .tut-thumb-label {
+      font-family:'Bebas Neue',sans-serif; font-size:4.5rem;
+      color:rgba(233,162,9,.18); letter-spacing:3px; user-select:none;
+    }
+    .tut-play {
+      position:absolute; width:56px; height:56px;
+      border:3px solid var(--accent); border-radius:50%;
+      display:flex; align-items:center; justify-content:center;
+      background:rgba(255,255,255,.85); cursor:pointer;
+      transition:.25s; z-index:2;
+    }
+    .tut-play i { color:var(--accent); font-size:1.1rem; margin-left:3px; }
+    .tut-card:hover .tut-play { background:var(--accent); }
+    .tut-card:hover .tut-play i { color:var(--white); }
+
+    .tut-cat-tag {
+      position:absolute; top:12px; left:12px; z-index:3;
+      background:var(--accent); color:var(--white);
+      font-size:.68rem; font-weight:700; letter-spacing:1px; text-transform:uppercase;
+      padding:4px 12px; border-radius:20px;
+    }
+    .tut-type-tag {
+      position:absolute; top:12px; right:12px; z-index:3;
+      background:var(--white); color:var(--dark);
+      font-size:.68rem; font-weight:700; letter-spacing:1px; text-transform:uppercase;
+      padding:4px 12px; border-radius:20px; box-shadow:var(--shadow);
+    }
+
+    .tut-body { padding:20px 22px; display:flex; flex-direction:column; gap:10px; flex:1; }
+    .tut-body h3 { font-size:1rem; font-weight:700; line-height:1.35; }
+    .tut-body p  { font-size:.84rem; color:var(--muted); line-height:1.65; flex:1; }
+    .tut-meta    { display:flex; gap:14px; align-items:center; flex-wrap:wrap; }
+    .tut-meta span { font-size:.76rem; color:var(--muted); display:flex; align-items:center; gap:5px; }
+    .tut-meta .lvl-i { color:#2a9d5c; font-weight:700; }
+    .tut-meta .lvl-m { color:var(--accent); font-weight:700; }
+    .tut-meta .lvl-a { color:#e63946; font-weight:700; }
+    .tut-link {
+      display:inline-flex; align-items:center; gap:6px;
+      font-size:.82rem; font-weight:700; color:var(--accent);
+      text-decoration:none; transition:.2s; padding-top:8px;
+      border-top:1px solid rgba(0,0,0,.06);
+    }
+    .tut-link:hover { color:var(--dark); }
+    .tut-link i { transition:.2s; }
+    .tut-card:hover .tut-link i { transform:translateX(4px); }
+
+    /* Badge free/pago */
+    .tut-price { font-size:.9rem; font-weight:700; color:var(--accent); }
+    .tut-price.free { color:#2a9d5c; }
+
+    /* Filtro */
+    .filter-bar { display:flex; flex-wrap:wrap; gap:10px; margin-bottom:32px; }
+    .filter-btn {
+      border:2px solid var(--accent-light); background:transparent;
+      border-radius:20px; padding:7px 20px; font-family:'Poppins',sans-serif;
+      font-size:.82rem; font-weight:600; cursor:pointer; color:var(--muted); transition:.2s;
+    }
+    .filter-btn.active, .filter-btn:hover { background:var(--accent); color:var(--white); border-color:var(--accent); }
+  </style>
+</head>
+<body>
+
+<!-- ═══ NAVBAR ═══ -->
+<header>
+  <nav id="navbar">
+    <a id="nav_logo" href="index.html">HI<span class="logo-dash"></span><em>TECH</em></a>
+    <ul id="nav_list">
+      <li class="nav-item"><a href="index.html">Início</a></li>
+      <li class="nav-item"><a href="softwares.html">Softwares</a></li>
+      <li class="nav-item active"><a href="tutoriais.html">Tutoriais</a></li>
+      <li class="nav-item"><a href="ebooks.html">eBooks</a></li>
+      <li class="nav-item"><a href="portfolio.html">Portfólio</a></li>
+    </ul>
+    <button class="btn-contact" onclick="location.href='index.html#contact'">Fale Comigo</button>
+    <button id="mobile_btn"><i class="fa-solid fa-bars"></i></button>
+  </nav>
+  <div id="mobile_menu">
+    <ul id="mobile_nav_list">
+      <li class="nav-item"><a href="index.html">Início</a></li>
+      <li class="nav-item"><a href="softwares.html">Softwares</a></li>
+      <li class="nav-item active"><a href="tutoriais.html">Tutoriais</a></li>
+      <li class="nav-item"><a href="ebooks.html">eBooks</a></li>
+      <li class="nav-item"><a href="portfolio.html">Portfólio</a></li>
+    </ul>
+    <button class="btn-contact" style="margin-top:8px" onclick="location.href='index.html#contact'">Fale Comigo</button>
+  </div>
+</header>
+
+<!-- ═══ HERO ═══ -->
+<div class="page-hero">
+  <p class="breadcrumb"><a href="index.html">Início</a> › Tutoriais</p>
+  <h1>Tutoriais & <span>Cursos</span></h1>
+  <p>
+    Vídeos de instalação de softwares, mini-cursos e cursos completos sobre
+    Windows, Linux, redes e infraestrutura de TI.
+  </p>
+</div>
+
+<!-- ═══ CONTEÚDO ═══ -->
+<div class="page-content">
+  <div class="filter-bar">
+    <button class="filter-btn active" data-filter="all">Todos</button>
+    <button class="filter-btn" data-filter="instalacao">Instalação</button>
+    <button class="filter-btn" data-filter="minicurso">Mini-curso</button>
+    <button class="filter-btn" data-filter="curso">Curso Completo</button>
+    <button class="filter-btn" data-filter="windows">Windows</button>
+    <button class="filter-btn" data-filter="linux">Linux</button>
+    <button class="filter-btn" data-filter="redes">Redes</button>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       GRID DE TUTORIAIS
+       Para adicionar:
+       1. Copie um bloco .tut-card
+       2. Edite: data-cat, label do thumb, tags,
+          h3, p, meta (duração/views/nível),
+          preço e href do link
+       ══════════════════════════════════════════ -->
+  <div class="card-grid" id="tut-grid">
+
+    <!-- ─── INSTALAÇÕES ─── -->
+    <div class="tut-card" data-cat="instalacao windows">
+      <div class="tut-thumb">
+        <span class="tut-thumb-label">WIN</span>
+        <span class="tut-cat-tag">Windows</span>
+        <span class="tut-type-tag">Instalação</span>
+        <!-- Troque href pelo link do YouTube -->
+        <a href="https://youtube.com/@seucanal" target="_blank" class="tut-play"><i class="fa-solid fa-play"></i></a>
+      </div>
+      <div class="tut-body">
+        <h3>Como instalar o Windows 11 do zero</h3>
+        <p>Particionamento, drivers, configurações iniciais e otimizações pós-instalação. Completo e prático.</p>
+        <div class="tut-meta">
+          <span>⏱ 18 min</span>
+          <span>👁 2.4K views</span>
+          <span class="lvl-i">● Iniciante</span>
+        </div>
+        <a href="https://youtube.com/@seucanal" target="_blank" class="tut-link">
+          <i class="fa-brands fa-youtube"></i> Assistir no YouTube <i class="fa-solid fa-arrow-right"></i>
+        </a>
+      </div>
+    </div>
+
+    <div class="tut-card" data-cat="instalacao windows">
+      <div class="tut-thumb">
+        <span class="tut-thumb-label">OFF</span>
+        <span class="tut-cat-tag">Windows</span>
+        <span class="tut-type-tag">Instalação</span>
+        <a href="https://youtube.com/@seucanal" target="_blank" class="tut-play"><i class="fa-solid fa-play"></i></a>
+      </div>
+      <div class="tut-body">
+        <h3>Instalando Microsoft 365 (Office) corretamente</h3>
+        <p>Download oficial, instalação silenciosa via ODT e ativação. Sem crack, sem risco.</p>
+        <div class="tut-meta">
+          <span>⏱ 12 min</span>
+          <span>👁 1.8K views</span>
+          <span class="lvl-i">● Iniciante</span>
+        </div>
+        <a href="https://youtube.com/@seucanal" target="_blank" class="tut-link">
+          <i class="fa-brands fa-youtube"></i> Assistir no YouTube <i class="fa-solid fa-arrow-right"></i>
+        </a>
+      </div>
+    </div>
+
+    <div class="tut-card" data-cat="instalacao linux">
+      <div class="tut-thumb">
+        <span class="tut-thumb-label">LAMP</span>
+        <span class="tut-cat-tag">Linux</span>
+        <span class="tut-type-tag">Instalação</span>
+        <a href="https://youtube.com/@seucanal" target="_blank" class="tut-play"><i class="fa-solid fa-play"></i></a>
+      </div>
+      <div class="tut-body">
+        <h3>Servidor LAMP no Ubuntu — Apache, MySQL e PHP</h3>
+        <p>Do zero ao servidor web com SSL, hardening e backup automatizado em ambiente Linux.</p>
+        <div class="tut-meta">
+          <span>⏱ 32 min</span>
+          <span>👁 1.2K views</span>
+          <span class="lvl-m">● Intermediário</span>
+        </div>
+        <a href="https://youtube.com/@seucanal" target="_blank" class="tut-link">
+          <i class="fa-brands fa-youtube"></i> Assistir no YouTube <i class="fa-solid fa-arrow-right"></i>
+        </a>
+      </div>
+    </div>
+
+    <!-- ─── MINI-CURSOS ─── -->
+    <div class="tut-card" data-cat="minicurso windows">
+      <div class="tut-thumb">
+        <span class="tut-thumb-label">GPO</span>
+        <span class="tut-cat-tag">Active Directory</span>
+        <span class="tut-type-tag">Mini-curso</span>
+        <a href="https://youtube.com/@seucanal" target="_blank" class="tut-play"><i class="fa-solid fa-play"></i></a>
+      </div>
+      <div class="tut-body">
+        <h3>GPO na prática — bloqueando e liberando</h3>
+        <p>Políticas de grupo do zero. Gerencie usuários, restrições e configurações com eficiência corporativa.</p>
+        <div class="tut-meta">
+          <span>⏱ 45 min</span>
+          <span>👁 3.1K views</span>
+          <span class="lvl-a">● Avançado</span>
+        </div>
+        <a href="https://youtube.com/@seucanal" target="_blank" class="tut-link">
+          <i class="fa-brands fa-youtube"></i> Assistir no YouTube <i class="fa-solid fa-arrow-right"></i>
+        </a>
+      </div>
+    </div>
+
+    <div class="tut-card" data-cat="minicurso redes">
+      <div class="tut-thumb">
+        <span class="tut-thumb-label">VLAN</span>
+        <span class="tut-cat-tag">Redes</span>
+        <span class="tut-type-tag">Mini-curso</span>
+        <a href="https://youtube.com/@seucanal" target="_blank" class="tut-play"><i class="fa-solid fa-play"></i></a>
+      </div>
+      <div class="tut-body">
+        <h3>VLAN e segmentação de redes</h3>
+        <p>Criando VLANs no switch, roteamento inter-VLAN e boas práticas de segmentação para empresas.</p>
+        <div class="tut-meta">
+          <span>⏱ 28 min</span>
+          <span>👁 980 views</span>
+          <span class="lvl-m">● Intermediário</span>
+        </div>
+        <a href="https://youtube.com/@seucanal" target="_blank" class="tut-link">
+          <i class="fa-brands fa-youtube"></i> Assistir no YouTube <i class="fa-solid fa-arrow-right"></i>
+        </a>
+      </div>
+    </div>
+
+    <!-- ─── CURSOS COMPLETOS ─── -->
+    <div class="tut-card" data-cat="curso windows">
+      <div class="tut-thumb">
+        <span class="tut-thumb-label">WSRV</span>
+        <span class="tut-cat-tag">Windows Server</span>
+        <span class="tut-type-tag">Curso Completo</span>
+        <a href="#" class="tut-play"><i class="fa-solid fa-play"></i></a>
+      </div>
+      <div class="tut-body">
+        <h3>Windows Server do Zero ao Avançado</h3>
+        <p>Instalação, AD DS, DNS, DHCP, File Server, GPO, IIS e segurança. Módulos práticos com laboratório virtual.</p>
+        <div class="tut-meta">
+          <span>⏱ 6h30</span>
+          <span>👁 500+ alunos</span>
+          <span class="lvl-i">● Iniciante → Avançado</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;padding-top:10px;border-top:1px solid rgba(0,0,0,.06)">
+          <span class="tut-price">R$ 89,90</span>
+          <!-- Troque # pelo link de compra (Hotmart, Kirvano…) -->
+          <a href="#" class="card-btn"><i class="fa-solid fa-cart-shopping"></i> Adquirir</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="tut-card" data-cat="curso linux">
+      <div class="tut-thumb">
+        <span class="tut-thumb-label">LNX</span>
+        <span class="tut-cat-tag">Linux</span>
+        <span class="tut-type-tag">Curso Completo</span>
+        <a href="#" class="tut-play"><i class="fa-solid fa-play"></i></a>
+      </div>
+      <div class="tut-body">
+        <h3>Linux para Administradores de Sistemas</h3>
+        <p>Terminal, serviços, segurança, automação com shell script e administração de servidores em produção.</p>
+        <div class="tut-meta">
+          <span>⏱ 8h</span>
+          <span>👁 320+ alunos</span>
+          <span class="lvl-m">● Intermediário</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;padding-top:10px;border-top:1px solid rgba(0,0,0,.06)">
+          <span class="tut-price">R$ 79,90</span>
+          <a href="#" class="card-btn"><i class="fa-solid fa-cart-shopping"></i> Adquirir</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="tut-card" data-cat="curso redes">
+      <div class="tut-thumb">
+        <span class="tut-thumb-label">NET</span>
+        <span class="tut-cat-tag">Redes</span>
+        <span class="tut-type-tag">Curso Completo</span>
+        <a href="#" class="tut-play"><i class="fa-solid fa-play"></i></a>
+      </div>
+      <div class="tut-body">
+        <h3>Redes do Zero — TCP/IP ao pfSense</h3>
+        <p>Fundamentos de redes, endereçamento IP, switching, roteamento, firewall e VPN em ambiente real.</p>
+        <div class="tut-meta">
+          <span>⏱ 10h</span>
+          <span>👁 410+ alunos</span>
+          <span class="lvl-i">● Iniciante → Avançado</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;padding-top:10px;border-top:1px solid rgba(0,0,0,.06)">
+          <span class="tut-price">R$ 99,90</span>
+          <a href="#" class="card-btn"><i class="fa-solid fa-cart-shopping"></i> Adquirir</a>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /#tut-grid -->
+</div><!-- /.page-content -->
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+  <img src="wave.svg" alt=""/>
+  <div id="footer_items">
+    <span id="copyright">&copy; 2025 Hi-Tech</span>
+    <div class="social-btns">
+      <a href="https://wa.me/55XXXXXXXXXX" target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
+      <a href="https://instagram.com/seuperfil" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+      <a href="https://youtube.com/@seucanal" target="_blank"><i class="fa-brands fa-youtube"></i></a>
+    </div>
+  </div>
+</footer>
+
+<script>
+$(document).ready(function(){
+  $('#mobile_btn').on('click',function(){
+    $('#mobile_menu').toggleClass('active');
+    $(this).find('i').toggleClass('fa-bars fa-x');
+  });
+  $(window).on('scroll',function(){
+    $('header').css('box-shadow',$(window).scrollTop()>10?'0 2px 12px rgba(0,0,0,.10)':'none');
+  });
+
+  /* Filtro multi-categoria (data-cat pode ter múltiplos valores separados por espaço) */
+  $('.filter-btn').on('click', function(){
+    $('.filter-btn').removeClass('active');
+    $(this).addClass('active');
+    const cat = $(this).data('filter');
+    if(cat === 'all'){
+      $('.tut-card').fadeIn(250);
+    } else {
+      $('.tut-card').each(function(){
+        const cats = ($(this).data('cat') || '').split(' ');
+        cats.includes(cat) ? $(this).fadeIn(250) : $(this).hide();
+      });
+    }
+  });
+
+  ScrollReveal().reveal('.tut-card', { origin:'bottom', duration:700, distance:'20px', interval:100 });
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>eBooks | Hi-Tech</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous"/>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Bebas+Neue&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="shared.css"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/scrollreveal"></script>
+  <style>
+    /* ── capa do ebook ── */
+    .ebook-cover {
+      width:80px; height:106px;
+      border-radius:4px 10px 10px 4px;
+      display:flex; align-items:center; justify-content:center;
+      font-size:2.4rem; flex-shrink:0;
+      box-shadow:4px 4px 0 rgba(0,0,0,.15), 6px 6px 0 rgba(0,0,0,.08);
+      position:relative;
+    }
+    /* lombada */
+    .ebook-cover::before {
+      content:''; position:absolute; left:0; top:0; bottom:0; width:8px;
+      background:rgba(0,0,0,.2); border-radius:4px 0 0 4px;
+    }
+
+    /* card horizontal para ebook */
+    .ebook-card {
+      background:var(--white); border-radius:20px; padding:24px 26px;
+      box-shadow:var(--shadow); display:flex; gap:24px; align-items:flex-start;
+      transition:transform .3s, box-shadow .3s; position:relative; overflow:hidden;
+    }
+    .ebook-card::before {
+      content:''; position:absolute; top:0; left:0; bottom:0; width:4px;
+      background:var(--accent); transform:scaleY(0); transform-origin:bottom; transition:.35s;
+    }
+    .ebook-card:hover { transform:translateY(-5px); box-shadow:0 14px 32px rgba(0,0,0,.13); }
+    .ebook-card:hover::before { transform:scaleY(1); }
+
+    .ebook-info { flex:1; display:flex; flex-direction:column; gap:10px; }
+    .ebook-info h3 { font-size:1.1rem; font-weight:700; }
+    .ebook-info p  { font-size:.87rem; color:var(--muted); line-height:1.7; }
+
+    .ebook-tags { display:flex; gap:6px; flex-wrap:wrap; }
+    .ebook-tag {
+      font-size:.68rem; font-weight:700; padding:3px 10px; border-radius:20px;
+      background:var(--secondary-bg); color:var(--dark);
+    }
+
+    .ebook-footer {
+      display:flex; align-items:center; gap:16px; flex-wrap:wrap;
+      padding-top:12px; border-top:1px solid rgba(0,0,0,.06);
+    }
+    .ebook-price { font-size:1.4rem; font-weight:700; color:var(--accent); }
+    .ebook-pages { font-size:.78rem; color:var(--muted); }
+
+    /* grid vertical para ebooks */
+    .ebook-grid { display:flex; flex-direction:column; gap:20px; }
+
+    /* banner destaque */
+    .ebook-banner {
+      background:var(--secondary-bg); border-radius:20px;
+      padding:32px 36px; display:flex; align-items:center;
+      justify-content:space-between; gap:24px; flex-wrap:wrap;
+      margin-bottom:40px; box-shadow:var(--shadow);
+    }
+    .ebook-banner h2 { font-size:1.6rem; font-weight:800; }
+    .ebook-banner h2 span { color:var(--accent); }
+    .ebook-banner p { color:var(--muted); font-size:.9rem; margin-top:6px; max-width:440px; }
+
+
+    /* Ajustes responsivos finais para eBooks */
+    .ebook-card .card-btn, .ebook-banner .card-btn { white-space:nowrap; }
+    @media(max-width:760px){
+      .ebook-banner { padding:24px; align-items:flex-start; }
+      .ebook-banner > div:last-child { text-align:left !important; width:100%; }
+      .ebook-card { flex-direction:column; padding:22px; }
+      .ebook-cover { width:72px; height:96px; }
+      .ebook-footer { align-items:flex-start; flex-direction:column; }
+      .ebook-card .card-btn, .ebook-banner .card-btn { width:100%; justify-content:center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══ NAVBAR ═══ -->
+<header>
+  <nav id="navbar">
+    <a id="nav_logo" href="index.html">HI<span class="logo-dash"></span><em>TECH</em></a>
+    <ul id="nav_list">
+      <li class="nav-item"><a href="index.html">Início</a></li>
+      <li class="nav-item"><a href="softwares.html">Softwares</a></li>
+      <li class="nav-item"><a href="tutoriais.html">Tutoriais</a></li>
+      <li class="nav-item active"><a href="ebooks.html">eBooks</a></li>
+      <li class="nav-item"><a href="portfolio.html">Portfólio</a></li>
+    </ul>
+    <button class="btn-contact" onclick="location.href='index.html#contact'">Fale Comigo</button>
+    <button id="mobile_btn"><i class="fa-solid fa-bars"></i></button>
+  </nav>
+  <div id="mobile_menu">
+    <ul id="mobile_nav_list">
+      <li class="nav-item"><a href="index.html">Início</a></li>
+      <li class="nav-item"><a href="softwares.html">Softwares</a></li>
+      <li class="nav-item"><a href="tutoriais.html">Tutoriais</a></li>
+      <li class="nav-item active"><a href="ebooks.html">eBooks</a></li>
+      <li class="nav-item"><a href="portfolio.html">Portfólio</a></li>
+    </ul>
+    <button class="btn-contact" style="margin-top:8px" onclick="location.href='index.html#contact'">Fale Comigo</button>
+  </div>
+</header>
+
+<!-- ═══ HERO ═══ -->
+<div class="page-hero">
+  <p class="breadcrumb"><a href="index.html">Início</a> › eBooks</p>
+  <h1>Biblioteca de <span>eBooks</span></h1>
+  <p>Guias completos em PDF escritos por quem vive a TI. Baixe uma vez, use para sempre.</p>
+</div>
+
+<!-- ═══ CONTEÚDO ═══ -->
+<div class="page-content">
+
+  <!-- Banner destaque -->
+  <div class="ebook-banner">
+    <div>
+      <h2>Pack <span>Completo</span> — todos os eBooks</h2>
+      <p>Adquira todos os eBooks com desconto especial e tenha a biblioteca completa de TI na sua mão.</p>
+    </div>
+    <div style="text-align:right; flex-shrink:0;">
+      <div style="font-size:2rem; font-weight:900; color:var(--accent);">R$ 199,90</div>
+      <div style="font-size:.8rem; color:var(--muted); margin-bottom:12px; text-decoration:line-through;">De R$ 318,50</div>
+      <!-- Troque # pelo link do pack completo -->
+      <a href="#" class="card-btn"><i class="fa-solid fa-bolt"></i> Comprar Pack Completo</a>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       LISTA DE EBOOKS
+       Para adicionar um eBook:
+       1. Copie um bloco .ebook-card
+       2. Edite: cor da capa, emoji, título,
+          descrição, tags, páginas, preço e href
+       ══════════════════════════════════════════ -->
+  <div class="ebook-grid">
+
+    <!-- eBook 1 -->
+    <div class="ebook-card">
+      <div class="ebook-cover" style="background:#dbeafe;">📘</div>
+      <div class="ebook-info">
+        <h3>Windows Server do Zero</h3>
+        <p>
+          Guia completo de instalação, configuração e administração do Windows Server 2019/2022.
+          Cobre AD DS, DNS, DHCP, File Server, GPO, IIS e hardening de segurança. Com exemplos reais
+          de ambiente corporativo e laboratório passo a passo.
+        </p>
+        <div class="ebook-tags">
+          <span class="ebook-tag">Windows Server</span>
+          <span class="ebook-tag">Active Directory</span>
+          <span class="ebook-tag">GPO</span>
+          <span class="ebook-tag">DNS</span>
+          <span class="ebook-tag">Iniciante → Avançado</span>
+        </div>
+        <div class="ebook-footer">
+          <span class="ebook-price">R$ 49,90</span>
+          <span class="ebook-pages">📄 180 páginas</span>
+          <!-- Troque # pelo link de compra (Hotmart, Kirvano…) -->
+          <a href="#" class="card-btn"><i class="fa-solid fa-cart-shopping"></i> Comprar agora</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- eBook 2 -->
+    <div class="ebook-card">
+      <div class="ebook-cover" style="background:#dcfce7;">📗</div>
+      <div class="ebook-info">
+        <h3>Linux para Administradores</h3>
+        <p>
+          Domine o terminal, gerenciamento de pacotes, serviços, permissões e segurança em
+          ambientes Linux corporativos. Inclui shell script, agendamento com cron, SSH hardening
+          e administração de servidores Ubuntu/Debian em produção.
+        </p>
+        <div class="ebook-tags">
+          <span class="ebook-tag">Linux</span>
+          <span class="ebook-tag">Ubuntu</span>
+          <span class="ebook-tag">Shell Script</span>
+          <span class="ebook-tag">Segurança</span>
+          <span class="ebook-tag">Intermediário</span>
+        </div>
+        <div class="ebook-footer">
+          <span class="ebook-price">R$ 59,90</span>
+          <span class="ebook-pages">📄 210 páginas</span>
+          <a href="#" class="card-btn"><i class="fa-solid fa-cart-shopping"></i> Comprar agora</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- eBook 3 -->
+    <div class="ebook-card">
+      <div class="ebook-cover" style="background:#fef9c3;">🔐</div>
+      <div class="ebook-info">
+        <h3>Segurança em Redes Corporativas</h3>
+        <p>
+          Firewall, VPN, VLAN, IDS/IPS, monitoramento com Zabbix e boas práticas de segurança
+          da informação. Guia focado em ambientes Windows e Linux com exemplos de configuração
+          do pfSense e políticas de segurança corporativa.
+        </p>
+        <div class="ebook-tags">
+          <span class="ebook-tag">Segurança</span>
+          <span class="ebook-tag">pfSense</span>
+          <span class="ebook-tag">VPN</span>
+          <span class="ebook-tag">VLAN</span>
+          <span class="ebook-tag">Intermediário</span>
+        </div>
+        <div class="ebook-footer">
+          <span class="ebook-price">R$ 54,90</span>
+          <span class="ebook-pages">📄 160 páginas</span>
+          <a href="#" class="card-btn"><i class="fa-solid fa-cart-shopping"></i> Comprar agora</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- eBook 4 -->
+    <div class="ebook-card">
+      <div class="ebook-cover" style="background:#ffe4e6;">🌐</div>
+      <div class="ebook-info">
+        <h3>Servidor Web com IIS, Apache & Nginx</h3>
+        <p>
+          Configure servidores web do zero: IIS no Windows Server com PHP e SSL, Apache e Nginx
+          no Linux com virtual hosts, Let's Encrypt, proxy reverso e otimização de performance.
+          Inclui exemplos práticos de hospedagem de aplicações.
+        </p>
+        <div class="ebook-tags">
+          <span class="ebook-tag">IIS</span>
+          <span class="ebook-tag">Apache</span>
+          <span class="ebook-tag">Nginx</span>
+          <span class="ebook-tag">PHP</span>
+          <span class="ebook-tag">SSL</span>
+          <span class="ebook-tag">Intermediário</span>
+        </div>
+        <div class="ebook-footer">
+          <span class="ebook-price">R$ 44,90</span>
+          <span class="ebook-pages">📄 145 páginas</span>
+          <a href="#" class="card-btn"><i class="fa-solid fa-cart-shopping"></i> Comprar agora</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- eBook 5 -->
+    <div class="ebook-card">
+      <div class="ebook-cover" style="background:#ede9fe;">📡</div>
+      <div class="ebook-info">
+        <h3>Redes do Zero — TCP/IP ao roteamento</h3>
+        <p>
+          Fundamentos completos de redes: modelo OSI, TCP/IP, endereçamento e sub-redes,
+          switching, roteamento estático e dinâmico, DNS, DHCP e cabeamento estruturado.
+          Ideal para quem está ingressando na área ou quer reforçar a base.
+        </p>
+        <div class="ebook-tags">
+          <span class="ebook-tag">Redes</span>
+          <span class="ebook-tag">TCP/IP</span>
+          <span class="ebook-tag">DNS</span>
+          <span class="ebook-tag">DHCP</span>
+          <span class="ebook-tag">Iniciante</span>
+        </div>
+        <div class="ebook-footer">
+          <span class="ebook-price">R$ 49,90</span>
+          <span class="ebook-pages">📄 190 páginas</span>
+          <a href="#" class="card-btn"><i class="fa-solid fa-cart-shopping"></i> Comprar agora</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- eBook 6 -->
+    <div class="ebook-card">
+      <div class="ebook-cover" style="background:#e0f2fe;">☁️</div>
+      <div class="ebook-info">
+        <h3>Cloud & Virtualização para TI</h3>
+        <p>
+          Introdução à cloud, Docker, containers, VMs com Hyper-V e VirtualBox, e conceitos
+          de infraestrutura como código. Aprenda a criar laboratórios virtuais e ambientes
+          de produção escaláveis mesmo com recursos limitados.
+        </p>
+        <div class="ebook-tags">
+          <span class="ebook-tag">Docker</span>
+          <span class="ebook-tag">Hyper-V</span>
+          <span class="ebook-tag">VirtualBox</span>
+          <span class="ebook-tag">Cloud</span>
+          <span class="ebook-tag">Intermediário</span>
+        </div>
+        <div class="ebook-footer">
+          <span class="ebook-price">R$ 59,90</span>
+          <span class="ebook-pages">📄 175 páginas</span>
+          <a href="#" class="card-btn"><i class="fa-solid fa-cart-shopping"></i> Comprar agora</a>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /.ebook-grid -->
+</div><!-- /.page-content -->
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+  <img src="wave.svg" alt=""/>
+  <div id="footer_items">
+    <span id="copyright">&copy; 2025 Hi-Tech</span>
+    <div class="social-btns">
+      <a href="https://wa.me/55XXXXXXXXXX" target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
+      <a href="https://instagram.com/seuperfil" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+      <a href="https://youtube.com/@seucanal" target="_blank"><i class="fa-brands fa-youtube"></i></a>
+    </div>
+  </div>
+</footer>
+
+<script>
+$(document).ready(function(){
+  $('#mobile_btn').on('click',function(){
+    $('#mobile_menu').toggleClass('active');
+    $(this).find('i').toggleClass('fa-bars fa-x');
+  });
+  $(window).on('scroll',function(){
+    $('header').css('box-shadow',$(window).scrollTop()>10?'0 2px 12px rgba(0,0,0,.10)':'none');
+  });
+  ScrollReveal().reveal('.ebook-card', { origin:'left', duration:700, distance:'24px', interval:120 });
+  ScrollReveal().reveal('.ebook-banner', { origin:'bottom', duration:800, distance:'20px' });
+});
+</script>
+</body>
+</html>
